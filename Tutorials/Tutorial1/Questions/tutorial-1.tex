@@ -226,8 +226,8 @@ steady state $u_*$ evolve according to the linear integro-differential equation
 \]
 One way to navigate the \textit{circulant} matrix $M$ and to relate \cref{eq:ODE} to
 \cref{eq:NFPer} is to
-recall that the grid has nodes $x_1=-L$, $x_{n/2+1} = 0$, and $x_{n}=L-h$. The
-equation
+recall that the grid has nodes $x_1=-L$, $x_{n/2+1} = 0$, and $x_{n+1}=L$ (the latter
+is not used in calculations). The equation
 \[
  \partial_{t}u(0,t) = -u(0,t) + \int_{-L}^Lw_p(0-y)f(u(y,t))\, dy,
 \]
@@ -257,14 +257,15 @@ a circular convolution, a convolution between periodic functions with the same p
   Write a code that, for generic number of nodes $n$, stores the nodes
   $\{x_j\}_{j=1}^n$ in a vector, and forms the $n$-by-$n$ matrix $M$. You may want to
   test the matrix $M$ for low $n$, and known values of $w$. Ultimately you can
-  download a file containing the matrix for the parameter above at this link
-  \da[]{Provide link}
+  download a file containing the matrix for the parameter above at 
+  \href{https://zenodo.org/records/11120604}{this link}, in the folder
+  \texttt{Ring/}.
 \end{question}
 
 \begin{question} 
   Use the matrix $M$ in \cref{question:codeMatrix} to time step the set of ODEs
-  \cref{eq:ODE}. You can use any off-the-shelf timestepper available on your platform
-  for time step, or write your own. In the solutions I have used Matlab's in-built
+  \cref{eq:ODE}. You can use any off-the-shelf timestepper available on your
+  platform, or write your own time stepper. In the solutions I have used Matlab's in-built
   \texttt{ode45} which is an explicit $4$th order, time-adaptive scheme.
 \end{question}
 
@@ -279,8 +280,9 @@ a circular convolution, a convolution between periodic functions with the same p
 \begin{question} 
   From \cref{sec:questions} we know that, upon increasing $A$ above a critical value
   $A_c$, we should reach a Turing-like bifurcation. Calculate $A_c$ from
-  \cref{eq:ACrit}, set $A > A_c$ and repeat the numerical simulation: you should see
-  the formation of patterns.
+  \cref{eq:ACrit}, set $A > A_c$ and repeat the numerical simulation: you should now
+  observe the formation of patterns. If you plot initial and final condition, they
+  should have similar wavelength (they may even have the same roots).
 \end{question}
 
 \begin{question} 
@@ -295,13 +297,13 @@ a circular convolution, a convolution between periodic functions with the same p
 \begin{question} 
   As for ODEs, bifurcations of stationary states in a neural field equation can be
   super- or sub-critical. The analysis of the previous section does not address the
-  criticality of the Turing-like bifurcation, but we can do so numerically. One
+  criticality of the Turing-like bifurcation, but we can do that numerically. One
   possibility is to time-step the system for various values $\{A_k\}$ in the
   interval $[1,3] \ni A_c$, keeping an identical initial condition in the form of a small
   perturbation of the trivial state, say $\varphi(x) = \eps \cos(\xi_c \, x)$. 
 
   One observation is that $T$ must be large enough that each simulation gets close to
-  equilibrium, either the trivial state (when $A < A_c$) or the patterned state
+  an equilibrium, either the trivial state (when $A < A_c$) or the patterned state
   (when $A > A_c$).
 
   At the end of the simulation for $A = A_k$, we record a solution measure of the

@@ -68,9 +68,23 @@
 
 \maketitle
 
-% \begin{abstract} In this tutorial we will perform numerical simulations
-%   \href{http://htmlpreview.github.io/?}{}
-% \end{abstract}
+\begin{abstract}
+  In this tutorial we study the implementation of a basic Finite Element method for a
+  neural field equation with one or more components. We will also compute and
+  visualise patterns of cortical activity supported by these models, and observed in
+  experiments. Before starting this tutorial download the latest version of
+  \href{https://zenodo.org/records/11120604}{the accompanying
+  dataset}. Solutions to the exercises can be found here:
+  \href{http://htmlpreview.github.io/?https://github.com/danieleavitabile/numerical-analysis-mathematical-neuroscience/blob/main/Tutorials/Tutorial2/Solutions/Question1/html/driver.html}{Q1},
+  \href{http://htmlpreview.github.io/?https://github.com/danieleavitabile/numerical-analysis-mathematical-neuroscience/blob/main/Tutorials/Tutorial2/Solutions/Question2/html/driver.html}{Q2},
+  \href{http://htmlpreview.github.io/?https://github.com/danieleavitabile/numerical-analysis-mathematical-neuroscience/blob/main/Tutorials/Tutorial2/Solutions/Question3/html/driver.html}{Q3},
+  \href{http://htmlpreview.github.io/?https://github.com/danieleavitabile/numerical-analysis-mathematical-neuroscience/blob/main/Tutorials/Tutorial2/Solutions/Question4/Disk/html/driver.html}{Q4 (Disk)},
+  and
+  \href{http://htmlpreview.github.io/?https://github.com/danieleavitabile/numerical-analysis-mathematical-neuroscience/blob/main/Tutorials/Tutorial2/Solutions/Question4/Hexagon/html/driver.html}{Q4 (Hexagon)},
+  Code can be downloaded from
+  \href{https://github.com/danieleavitabile/numerical-analysis-mathematical-neuroscience/tree/main}{our
+  repository}.
+\end{abstract}
 
 
 \section{Introduction}\label{sec:introduction} 
@@ -96,7 +110,7 @@ area of the triangle $\tau_\alpha$ (see schematic in \cref{fig:triangulation}).
 \begin{figure}
   \centering
   \includegraphics[width = 0.8\textwidth]{triangulation}
-  \caption{A triangulation with $5$ elements for a cortex $D \subset \RSet^3$. Each
+  \caption{A triangulation with $5$ elements for a domain $D \subset \RSet^3$. Each
   triangle is mapped to the standard simplex $\sigma \subset \RSet^2$. To the right
 we show the corresponding element matrix $E$.}
   \label{fig:triangulation}
