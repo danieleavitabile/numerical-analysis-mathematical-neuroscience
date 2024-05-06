@@ -47,7 +47,18 @@
 \begin{document}
 
 \maketitle
-\da[inline]{Tutorial: Add data folder to solutions}
+
+\begin{abstract}
+  In this tutorial we discuss a basic mechanism for the formation of spatial patterns
+  from homogeneous steady states in cortical models knows as Neural Field Equations.
+  We use a mix of formal nonlinear analysis and numerical simulations. Before
+  starting this tutorial download the latest version of \href{https://zenodo.org/records/11120604}{the accompanying
+  dataset}. Solutions to the exercises can be 
+  \href{http://htmlpreview.github.io/?https://github.com/danieleavitabile/numerical-analysis-mathematical-neuroscience/blob/main/Tutorials/Tutorial1/Solutions/html/driver.html}{browsed here}
+  and code can be downloaded from
+  \href{https://github.com/danieleavitabile/numerical-analysis-mathematical-neuroscience/tree/main}{our
+  repository}.
+\end{abstract}
 
 \section{Introduction}\label{sec:intro} 
 We will study the emergence of spatially-periodic stationary solutions in the
@@ -254,7 +265,7 @@ a circular convolution, a convolution between periodic functions with the same p
   Use the matrix $M$ in \cref{question:codeMatrix} to time step the set of ODEs
   \cref{eq:ODE}. You can use any off-the-shelf timestepper available on your platform
   for time step, or write your own. In the solutions I have used Matlab's in-built
-  \texttt{ode45} which is $4$the order and time-adaptive.
+  \texttt{ode45} which is an explicit $4$th order, time-adaptive scheme.
 \end{question}
 
 \begin{question} 
@@ -276,7 +287,7 @@ a circular convolution, a convolution between periodic functions with the same p
   From \cref{sec:questions} we know that emerging patterns should have a specific wavelength
   $\xi_c$. Verify that, when $A > A_c$, patterns are formed at the predicted
   wavelength $\xi_c$. One way to do that is to set a deterministic initial condition with
-  wavelength $\xi_c$, for instance $\varphi(x) =\cos(\xi_c\, x)$, instead of a random
+  wavelength $\xi_c$, for instance $\varphi(x) = \eps \cos(\xi_c\, x)$ for $\eps \ll 1$, instead of a random
   one, and observe the perturbations decay or amplify when $A$ is above or below the
   critical value, respectively.
 \end{question}
@@ -284,14 +295,14 @@ a circular convolution, a convolution between periodic functions with the same p
 \begin{question} 
   As for ODEs, bifurcations of stationary states in a neural field equation can be
   super- or sub-critical. The analysis of the previous section does not address the
-  criticality of the Turing-like bifurcation, but we can do so numerically, using the
-  code. The main idea is to time-step the system for various values $\{A_k\}$ in the
-  interval $[1,3]$, keeping an identical initial condition in the form of a small
+  criticality of the Turing-like bifurcation, but we can do so numerically. One
+  possibility is to time-step the system for various values $\{A_k\}$ in the
+  interval $[1,3] \ni A_c$, keeping an identical initial condition in the form of a small
   perturbation of the trivial state, say $\varphi(x) = \eps \cos(\xi_c \, x)$. 
 
-  The expectation is that $T$ be sufficiently large that each simulation has reached
-  an equilibrium, either the trivial state, when $A < A_c$ or the patterned state
-  when $A > A_c$.
+  One observation is that $T$ must be large enough that each simulation gets close to
+  equilibrium, either the trivial state (when $A < A_c$) or the patterned state
+  (when $A > A_c$).
 
   At the end of the simulation for $A = A_k$, we record a solution measure of the
   corresponding final state $u_k(x,T)$, for instance the infinity norm  $\|

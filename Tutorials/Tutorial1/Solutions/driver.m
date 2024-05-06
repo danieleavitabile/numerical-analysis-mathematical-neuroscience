@@ -28,9 +28,6 @@ subplot(2,1,1);
 plot(x,wFun(x)); xlabel('x'); legend({'w(x)'})
 subplot(2,1,2); 
 plot(u,S(u),u,dS(u)); xlabel('u'); legend({'S(u)','S''(u)'});
-% subplot(3,1,3); 
-% plot(xi,wHatFun(xi),xi,gamma*ones(size(xi)),xic,wHatFun(xic),'*'); 
-% xlabel('xi'); legend({'wHat(x)','gamma'});
 
 %%
 % The kernel is excitatory on short scales, and inhibitory on longer scales. In the
@@ -60,8 +57,7 @@ plot(xi,wHatFun(xi),...
      xi, 1/(0.9*Ac*dS(0))*ones(size(xi)),...
      [-xic xic],wHatFun([-xic xic]),'*'...
 ); 
-xlabel('\xi'); legend({'$\hat W_c(\xi)$','1/(1.9 A_c S''(0)',...
-                       '1/(0.9 A_c S''(0)'}, 'Interpreter', 'latex');
+xlabel('\xi'); legend({'$\hat W_c(\xi)$','1/(1.9 A_c S''(0))', '1/(0.9 A_c S''(0))'}, 'Interpreter', 'latex');
 
 %% Question 5
 
@@ -199,3 +195,6 @@ subplot(2,2,[2 4]);
 surf(X,T,U2); view([0 90]); shading interp;
 xlabel('x'); ylabel('t'); zlabel('u(x,t)');
 axis tight; colorbar;
+
+%% Function NeuralField.m
+% <include>NeuralField.m</include>
