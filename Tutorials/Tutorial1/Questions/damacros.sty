@@ -1,0 +1,94 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesClass{damacros}[2019/09/08 DA's auxiliary macros]
+
+\RequirePackage{amsfonts,amsopn}
+\RequirePackage[textwidth=6em] {todonotes}
+\RequirePackage{cleveref}
+
+% Define a warning sybol
+\newcommand\Warning{%
+ \makebox[1.4em][c]{%
+ \makebox[0pt][c]{\raisebox{.1em}{\small!}}%
+ \makebox[0pt][c]{\Large$\bigtriangleup$}}}%
+
+% DA's todos, define your own macros and colors
+\newcommand{\da}[2][noinline]{\todo[#1, color=blue!20!white]{\small \texttt{DA}: #2}}
+
+% % Other people's todos, examples
+\newcommand{\fc}[2][noinline]{\todo[#1, color=green!20!white]{\small \texttt{FC}: #2}}
+\newcommand{\fa}[2][noinline]{\todo[#1, color=red!20!white]{\small \texttt{FB}: #2}}
+\newcommand{\ga}[2][noinline]{\todo[#1, color=yellow!20!white]{\small \texttt{GC}: #2}}
+\newcommand{\warn}[2][noinline]{\todo[#1, color=red!20!white]{{\tiny \Warning} #2}}
+% Hack below needed to make notes appear only to the right
+\makeatletter 
+\@mparswitchfalse%
+\makeatother
+\normalmarginpar
+% 
+
+% Operators (as in LaTeX Operators)
+\DeclareMathOperator{\spec}{Spec}
+\DeclareMathOperator{\range}{Range}
+\DeclareMathOperator{\spn}{Span}
+\DeclareMathOperator{\diag}{diag}
+\DeclareMathOperator{\meas}{meas}
+\DeclareMathOperator{\supp}{supp}
+\DeclareMathOperator{\id}{Id}
+\DeclareMathOperator{\real}{Re}
+\DeclareMathOperator{\imag}{Im}
+
+% Notable constants (I do not often use the ones for e and i
+\newcommand{\eps}{\varepsilon}
+\DeclareMathOperator{\e}{e}
+\DeclareMathOperator{\Lip}{Lip}
+\DeclareMathOperator{\iunit}{i}
+
+% Additional theorem-like environments
+\newsiamthm{hypothesis}{Hypothesis}
+\newsiamthm{claim}{Claim}
+\newsiamremark{remark}{Remark}
+
+% Sets
+\newcommand{\BSet}{\mathbb{B}}
+\newcommand{\CSet}{\mathbb{C}}
+\newcommand{\DSet}{\mathbb{D}}
+\newcommand{\FSet}{\mathbb{F}}
+\newcommand{\LSet}{\mathbb{L}}
+\newcommand{\RSet}{\mathbb{R}}
+\newcommand{\SSet}{\mathbb{S}}
+\newcommand{\XSet}{\mathbb{X}}
+\newcommand{\XnSet}{\mathbb{X}_n}
+\newcommand{\YSet}{\mathbb{Y}}
+\newcommand{\USet}{\mathbb{U}}
+\newcommand{\WSet}{\mathbb{W}}
+\newcommand{\NSet}{\mathbb{N}}
+\newcommand{\ZSet}{\mathbb{Z}}
+\newcommand{\sph}{\mathbb{S}^2}
+
+% Useful for empty 
+\newcommand\blank{{\mkern 2mu\cdot\mkern 2mu}}
+
+% If one really must use calligraphic...
+\newcommand{\calA}{\mathcal{A}}
+\newcommand{\calB}{\mathcal{B}}
+\newcommand{\calL}{\mathcal{L}}
+\newcommand{\calM}{\mathcal{M}}
+\newcommand{\calS}{\mathcal{S}}
+\newcommand{\calF}{\mathcal{F}}
+\newcommand{\calG}{\mathcal{G}}
+\newcommand{\calP}{\mathcal{P}}
+
+% Probability
+\newcommand{\iid}{\stackrel{\mathrm{i.i.d.}}{\sim}}
+\DeclareMathOperator{\mean}{\mathbb{E}}
+\DeclareMathOperator{\vari}{var}
+\DeclareMathOperator{\prob}{\mathbb{P}}
+
+% Assign cref name to hypotheses
+\crefname{hypothesis}{Hypothesis}{Hypotheses}
+
+\newcommand{\scol}{\mathbin{;}}
+
+\DeclareMathOperator*{\esssup}{ess\,sup}
+\DeclareMathOperator*{\essinf}{ess\,inf}
+\DeclareMathOperator*{\pesssup}{\mathbb{P}-ess\,sup}

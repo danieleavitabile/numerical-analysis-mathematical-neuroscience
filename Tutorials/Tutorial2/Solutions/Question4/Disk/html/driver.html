@@ -1,0 +1,866 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      -->
+<title>driver</title>
+<meta name="generator" content="MATLAB 23.2">
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.date" content="2024-05-06">
+<meta name="DC.source" content="driver.m">
+<style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style>
+</head>
+<body>
+<div class="content">
+<h2>Contents</h2>
+<div>
+<ul>
+<li>
+<a href="#1">Cleaning</a>
+</li>
+<li>
+<a href="#2">Set path for input data</a>
+</li>
+<li>
+<a href="#3">Generate mesh and matrix data, or else load it; save animation</a>
+</li>
+<li>
+<a href="#4">Geometry and mesh parameters</a>
+</li>
+<li>
+<a href="#5">Model Parameters</a>
+</li>
+<li>
+<a href="#6">Load or generate mesh, synaptic matrix, and FEM matrix</a>
+</li>
+<li>
+<a href="#7">Initial condition</a>
+</li>
+<li>
+<a href="#8">Time step</a>
+</li>
+<li>
+<a href="#9">Animation</a>
+</li>
+<li>
+<a href="#10">Save animation to file</a>
+</li>
+<li>
+<a href="#11">Reset initial condition and restart</a>
+</li>
+<li>
+<a href="#13">Function GenerateMesh.m</a>
+</li>
+<li>
+<a href="#14">Function PlotField.m</a>
+</li>
+<li>
+<a href="#15">Function GenerateFEMMatrix.m</a>
+</li>
+<li>
+<a href="#16">Function GenerateMesh.m</a>
+</li>
+<li>
+<a href="#17">Function GenerateSynapticMatrix.m</a>
+</li>
+<li>
+<a href="#18">Function NeuralField.m</a>
+</li>
+<li>
+<a href="#19">Function SynapticKernelBessel.m</a>
+</li>
+<li>
+<a href="#20">Function PlotField.m</a>
+</li>
+<li>
+<a href="#21">Function PlotHistory.m</a>
+</li>
+<li>
+<a href="#22">Function SaveAnimation.m</a>
+</li>
+<li>
+<a href="#23">Function TriangleElementMeasure.m</a>
+</li>
+</ul>
+</div>
+<h2 id="1">Cleaning</h2>
+<pre class="codeinput">clear <span class="string">all</span>, close <span class="string">all</span>, clc;
+</pre>
+<h2 id="2">Set path for input data</h2>
+<pre class="codeinput">dataPath = <span class="string">'~/GitHub/utrecht-css-mathneuro-masterclass/Data/Spiral-Disk/'</span>;
+<span class="comment">% dataPath = './';</span>
+</pre>
+<h2 id="3">Generate mesh and matrix data, or else load it; save animation</h2>
+<pre class="codeinput">generateData = false;
+saveAnimation = false;
+</pre>
+<h2 id="4">Geometry and mesh parameters</h2>
+<pre class="codeinput">R = 30; hmax = 0.03;
+</pre>
+<h2 id="5">Model Parameters</h2>
+<pre class="codeinput">p(1) = 20;   <span class="comment">% mu</span>
+p(2) = 0.6;  <span class="comment">% theta</span>
+p(3) = 1;    <span class="comment">% alpha</span>
+p(4) = 2;    <span class="comment">% beta</span>
+p(5) = -2.2; <span class="comment">% gamma</span>
+p(6) = 1;    <span class="comment">% delta</span>
+p(7) = 3.5;  <span class="comment">% nu</span>
+p(8) = 5;    <span class="comment">% tau</span>
+</pre>
+<h2 id="6">Load or generate mesh, synaptic matrix, and FEM matrix</h2>
+<pre class="codeinput">
+<span class="keyword">if</span> generateData
+
+  <span class="comment">% Mesh</span>
+  mesh = GenerateMesh(R,hmax,dataPath);
+
+  <span class="comment">% Synaptic matrix</span>
+  r = linspace(-60,60,1000);
+  w = SynapticKernelBessel(r);
+  wFun = griddedInterpolant(r,w);
+  W = GenerateSynapticMatrix(mesh.nodes,wFun,1e-3,dataPath);
+
+  <span class="comment">% FEM matrix</span>
+  M = GenerateFEMMatrix(mesh,W,dataPath);
+
+<span class="keyword">else</span>
+
+  <span class="comment">% Mesh</span>
+  fileName = fullfile(dataPath,<span class="string">'mesh.mat'</span>);
+  mesh = load(fileName);
+
+  <span class="comment">% Synaptic matrix</span>
+  fileName = fullfile(dataPath,<span class="string">'synaptic-matrix.mat'</span>);
+  data = load(fileName); W = data.W;
+
+  <span class="comment">% FEM matrix</span>
+  fileName = fullfile(dataPath,<span class="string">'fem-matrix.mat'</span>);
+  data = load(fileName); M = data.M;
+
+<span class="keyword">end</span>
+</pre>
+<h2 id="7">Initial condition</h2>
+<pre class="codeinput">x = mesh.nodes(:,1); y = mesh.nodes(:,2); n = length(x);
+iU = 1:n; iV = n+iU;
+u0 = zeros(n,1); u0(find(y &gt; 0)) = 1;
+v0 = zeros(n,1); v0(find(x &lt; 0)) = 4;
+z0 = [u0; v0];
+</pre>
+<h2 id="8">Time step</h2>
+<pre class="codeinput">rhs = @(t,u) NeuralField(t,u,p,M);
+tspan = [0 50];
+[t,zHist] = ode45(rhs,tspan,z0);
+</pre>
+<h2 id="9">Animation</h2>
+<pre class="codeinput">plotOpts.U.clim = [-2 5];
+plotOpts.U.view = [0 90];
+plotOpts.U.xlim = [-R R];
+plotOpts.U.ylim = [-R R];
+plotOpts.U.axis = <span class="string">'equal'</span>;
+plotOpts.V = plotOpts.U;
+PlotHistory(t,zHist,mesh.nodes,mesh.elements,plotOpts);
+</pre>
+<img vspace="5" hspace="5" src="driver_01.png" alt=""> <h2 id="10">Save animation to file</h2>
+<pre class="codeinput">
+<span class="keyword">if</span> saveAnimation
+  fileName = fullfile(dataPath,<span class="string">'disk-spiral.mp4'</span>);
+  figure; SaveAnimation(t,zHist(:,iU),mesh.nodes,mesh.elements,plotOpts.U,fileName);
+<span class="keyword">end</span>
+</pre>
+<h2 id="11">Reset initial condition and restart</h2>
+<pre class="codeinput">u0 = zHist(end,iU)' .* ( sqrt(x.^2 + y.^2) &gt; 15 );
+v0 = zHist(end,iV)' .* ( sqrt(x.^2 + y.^2) &gt; 15 );
+z0 = [u0; v0];
+rhs = @(t,u) NeuralField(t,u,p,M);
+tspan = [0 100];
+[t,zHist] = ode45(rhs,tspan,z0);
+
+<span class="comment">% Animation</span>
+PlotHistory(t,zHist,mesh.nodes,mesh.elements,plotOpts);
+
+<span class="comment">% Save animation to file</span>
+<span class="keyword">if</span> saveAnimation
+  fileName = fullfile(dataPath,<span class="string">'perturbed-spiral.mp4'</span>);
+  figure; SaveAnimation(t,zHist(:,iU),mesh.nodes,mesh.elements,plotOpts.U,fileName);
+<span class="keyword">end</span>
+</pre>
+<img vspace="5" hspace="5" src="driver_02.png" alt=""> <p>The spiral wave is perturbed, but re-centres in another cortical location</p>
+<h2 id="13">Function GenerateMesh.m</h2>
+<pre class="language-matlab">
+<span class="keyword">function</span> mesh = GenerateMesh(r,hmax,dataPath)
+
+<span class="comment">  %% Determine if files must be saved</span>
+  <span class="keyword">if</span> nargin &lt; 3 || isempty(dataPath)
+    saveFiles = false;
+  <span class="keyword">else</span>
+    saveFiles = true;
+  <span class="keyword">end</span>
+
+<span class="comment">  %% Generate mesh of a hexagon inscribed in a unit disk using Matlab's PDE toolbox routines. </span>
+  theta = [0:5]'*pi/3; x = cos(theta); y = sin(theta);
+  hex = decsg([2;6;x;y]);
+  model = createpde();
+  geometryFromEdges(model,hex);
+
+  <span class="comment">% Specify a maximal element size</span>
+  mesh = generateMesh(model,<span class="string">"Hmax"</span>,hmax,GeometricOrder=<span class="string">"linear"</span>);
+
+  <span class="comment">% Fetch triangulation, </span>
+  nodes = mesh.Nodes';
+  elements = mesh.Elements';
+
+<span class="comment">  %% Rescale nodes to the disc or radius r, add z = 0 coordinate</span>
+  x = nodes(:,1); y = nodes(:,2); z = zeros(size(x));
+  [theta,rho] = cart2pol(x,y);
+  [x,y] = pol2cart(theta, r*rho);
+  nodes = [x, y, z];
+
+<span class="comment">  %% Finalise output</span>
+  mesh = [];
+  mesh.nodes = nodes;
+  mesh.elements = elements;
+
+  <span class="keyword">if</span> saveFiles
+
+    <span class="comment">% Set filenames</span>
+    meshFile = fullfile(dataPath,<span class="string">'mesh.mat'</span>);
+    nodesFile = fullfile(dataPath,<span class="string">'nodes.dat'</span>);
+    elementsFile = fullfile(dataPath,<span class="string">'elements.dat'</span>);
+
+    <span class="comment">% Save mesh to .mat file</span>
+    save(meshFile,<span class="string">'nodes'</span>,<span class="string">'elements'</span>);
+    disp(sprintf(<span class="string">'Saved file %s'</span>,meshFile));
+
+    <span class="comment">% Save nodes to text file</span>
+    fileID = fopen(nodesFile,<span class="string">'w'</span>);
+    fprintf(fileID,<span class="string">'#%16.12s %16.12s %16.12s\n'</span>, <span class="string">'x'</span>, <span class="string">'y'</span>, <span class="string">'z'</span>);
+    fprintf(fileID,<span class="string">' %16.12f %16.12f %16.12f\n'</span>, x, y, z);
+    fclose(fileID);
+    disp(sprintf(<span class="string">'Saved file %s'</span>,nodesFile));
+      
+    <span class="comment">% Save elements to text file</span>
+    fileID = fopen(elementsFile,<span class="string">'w'</span>);
+    fprintf(fileID,<span class="string">'# %12s %12s %12s\n'</span>, <span class="string">'node 1'</span>, <span class="string">'node2'</span>, <span class="string">'node3'</span>);
+    fprintf(fileID,<span class="string">'  %12i %12i %12i\n'</span>, elements');
+    fclose(fileID);
+    disp(sprintf(<span class="string">'Saved file %s'</span>,elementsFile));
+  <span class="keyword">end</span>
+
+<span class="keyword">end</span>
+
+</pre>
+<h2 id="14">Function PlotField.m</h2>
+<pre class="language-matlab">
+<span class="keyword">function</span> fh = PlotField(u,nodes,elem,opts)
+
+  <span class="comment">% Default options</span>
+  <span class="keyword">if</span> ~isfield(opts,<span class="string">'xlim'</span>)
+    opts.xlim = <span class="string">'auto'</span>;
+  <span class="keyword">end</span>
+  <span class="keyword">if</span> ~isfield(opts,<span class="string">'ylim'</span>)
+    opts.ylim = <span class="string">'auto'</span>;
+  <span class="keyword">end</span>
+  <span class="keyword">if</span> ~isfield(opts,<span class="string">'zlim'</span>)
+    opts.zlim = <span class="string">'auto'</span>;
+  <span class="keyword">end</span>
+  <span class="keyword">if</span> ~isfield(opts,<span class="string">'clim'</span>)
+    opts.clim = <span class="string">'auto'</span>;
+  <span class="keyword">end</span>
+  <span class="keyword">if</span> ~isfield(opts,<span class="string">'view'</span>)
+    opts.view = 3;
+  <span class="keyword">end</span>
+  <span class="keyword">if</span> ~isfield(opts,<span class="string">'axis'</span>)
+    opts.axis = <span class="string">'equal'</span>;
+  <span class="keyword">end</span>
+
+  <span class="comment">% Plot</span>
+  fh = trisurf(elem,nodes(:,1),nodes(:,2),nodes(:,3),u);
+  fh.EdgeColor = <span class="string">'#4C566A'</span>; <span class="comment">%'none';</span>
+  fh.EdgeAlpha = 0.4; <span class="comment">%'none';</span>
+  colorbar; 
+  clim(opts.clim);
+  view(opts.view); 
+  axis(opts.axis)
+
+  xlabel(<span class="string">'x'</span>);
+  ylabel(<span class="string">'y'</span>);
+  zlabel(<span class="string">'z'</span>);
+
+  xlim(opts.xlim);
+  ylim(opts.ylim);
+  zlim(opts.zlim);
+
+<span class="keyword">end</span>
+
+</pre>
+<h2 id="15">Function GenerateFEMMatrix.m</h2>
+<pre class="language-matlab">
+<span class="keyword">function</span> M = GenerateFEMMatrix(mesh,W,dataPath)
+
+<span class="comment">  %% Determine if a files must be saved</span>
+  <span class="keyword">if</span> nargin &lt; 3 || isempty(dataPath)
+    saveFiles = false;
+  <span class="keyword">else</span>
+    saveFiles = true;
+  <span class="keyword">end</span>
+
+  <span class="comment">% Unpack mesh</span>
+  nodes = mesh.nodes;
+  elem = mesh.elements;
+  x = nodes(:,1); y = nodes(:,2); z = mesh.nodes(:,3); 
+  n = length(x); numEl = size(elem,1);
+
+  <span class="comment">% Get nonzero global indices</span>
+  [row,col,wVal] = find(W);
+  mVal = zeros(size(wVal)); 
+  delta = zeros(size(wVal));
+  txt = sprintf(<span class="string">'Generating FEM matrix with nnz = %i...'</span>, length(mVal));
+  disp(txt)
+
+  <span class="comment">% Compute measure of each element</span>
+  mu = zeros(numEl,1);
+  <span class="keyword">parfor</span> k = 1:numEl
+    mu(k) = TriangleElementMeasure( x(elem(k,:)), y(elem(k,:)), z(elem(k,:)) );
+  <span class="keyword">end</span>
+
+  <span class="comment">% Integration weights over triangles</span>
+  q = 3; rho = ones(q,1)/6;
+
+  <span class="comment">% For each nonzero element in W</span>
+  <span class="keyword">parfor</span> m = 1:length(wVal)
+    
+    <span class="comment">% Every so often display progress</span>
+    <span class="keyword">if</span> mod(m,floor(length(wVal)/5)) == 0
+      txt = sprintf(<span class="string">'      ...filled %i%% of the matrix'</span>, floor(100*m/length(wVal)));
+      disp(txt)
+    <span class="keyword">end</span>
+
+    <span class="comment">% We are now at row(m), and we find elements including col(m):</span>
+    <span class="comment">% col(m) is contained in element(s) k, at local index(ices) l.</span>
+    [k,l] = find(elem == col(m));
+
+    <span class="comment">% Sum all weights (note k, l are vectors), store weights in delta</span>
+    delta(m) = mu(k)' * rho(l);
+    mVal(m) = wVal(m) * delta(m);
+
+  <span class="keyword">end</span>
+
+  <span class="comment">% Ensure only nonzero elements are retained</span>
+  idnnz = find(mVal); 
+  row = row(idnnz); col = col(idnnz); mVal = mVal(idnnz); delta = delta(idnnz);
+
+<span class="comment">  %% Make the matrix sparse, and save it to file</span>
+  M = sparse(row,col,mVal,n,n);
+
+<span class="comment">  %% Default file names</span>
+  <span class="keyword">if</span> saveFiles
+
+    <span class="comment">% Set file names</span>
+    matFile = fullfile(dataPath,<span class="string">'fem-matrix.mat'</span>);
+    datFile = fullfile(dataPath,<span class="string">'fem-matrix.dat'</span>);
+
+    <span class="comment">% Save .mat file</span>
+    save(matFile,<span class="string">'M'</span>);
+    disp(sprintf(<span class="string">'Saved file %s'</span>,matFile));
+
+    <span class="comment">% Save .dat file</span>
+    fileID = fopen(datFile,<span class="string">'w'</span>);
+    fprintf(fileID,<span class="string">'#%12s %12s\n'</span>, <span class="string">'numRows'</span>, <span class="string">'numCols'</span>);
+    fprintf(fileID,<span class="string">' %12i %12i\n'</span>, n, n);
+    fprintf(fileID,<span class="string">'# Nonzero elements\n'</span>);
+    fprintf(fileID,<span class="string">'#%12s %12s %20.12s\n'</span>, <span class="string">'i'</span>, <span class="string">'j'</span>, <span class="string">'value'</span>);
+    fprintf(fileID,<span class="string">' %12i %12i %20.12e\n'</span>, row, col, mVal);
+    fclose(fileID);
+    disp(sprintf(<span class="string">'Saved file %s'</span>,datFile));
+
+  <span class="keyword">end</span>
+  
+<span class="keyword">end</span>
+
+</pre>
+<h2 id="16">Function GenerateMesh.m</h2>
+<pre class="language-matlab">
+<span class="keyword">function</span> mesh = GenerateMesh(r,hmax,dataPath)
+
+<span class="comment">  %% Determine if files must be saved</span>
+  <span class="keyword">if</span> nargin &lt; 3 || isempty(dataPath)
+    saveFiles = false;
+  <span class="keyword">else</span>
+    saveFiles = true;
+  <span class="keyword">end</span>
+
+<span class="comment">  %% Generate mesh of a hexagon inscribed in a unit disk using Matlab's PDE toolbox routines. </span>
+  theta = [0:5]'*pi/3; x = cos(theta); y = sin(theta);
+  hex = decsg([2;6;x;y]);
+  model = createpde();
+  geometryFromEdges(model,hex);
+
+  <span class="comment">% Specify a maximal element size</span>
+  mesh = generateMesh(model,<span class="string">"Hmax"</span>,hmax,GeometricOrder=<span class="string">"linear"</span>);
+
+  <span class="comment">% Fetch triangulation, </span>
+  nodes = mesh.Nodes';
+  elements = mesh.Elements';
+
+<span class="comment">  %% Rescale nodes to the disc or radius r, add z = 0 coordinate</span>
+  x = nodes(:,1); y = nodes(:,2); z = zeros(size(x));
+  [theta,rho] = cart2pol(x,y);
+  [x,y] = pol2cart(theta, r*rho);
+  nodes = [x, y, z];
+
+<span class="comment">  %% Finalise output</span>
+  mesh = [];
+  mesh.nodes = nodes;
+  mesh.elements = elements;
+
+  <span class="keyword">if</span> saveFiles
+
+    <span class="comment">% Set filenames</span>
+    meshFile = fullfile(dataPath,<span class="string">'mesh.mat'</span>);
+    nodesFile = fullfile(dataPath,<span class="string">'nodes.dat'</span>);
+    elementsFile = fullfile(dataPath,<span class="string">'elements.dat'</span>);
+
+    <span class="comment">% Save mesh to .mat file</span>
+    save(meshFile,<span class="string">'nodes'</span>,<span class="string">'elements'</span>);
+    disp(sprintf(<span class="string">'Saved file %s'</span>,meshFile));
+
+    <span class="comment">% Save nodes to text file</span>
+    fileID = fopen(nodesFile,<span class="string">'w'</span>);
+    fprintf(fileID,<span class="string">'#%16.12s %16.12s %16.12s\n'</span>, <span class="string">'x'</span>, <span class="string">'y'</span>, <span class="string">'z'</span>);
+    fprintf(fileID,<span class="string">' %16.12f %16.12f %16.12f\n'</span>, x, y, z);
+    fclose(fileID);
+    disp(sprintf(<span class="string">'Saved file %s'</span>,nodesFile));
+      
+    <span class="comment">% Save elements to text file</span>
+    fileID = fopen(elementsFile,<span class="string">'w'</span>);
+    fprintf(fileID,<span class="string">'# %12s %12s %12s\n'</span>, <span class="string">'node 1'</span>, <span class="string">'node2'</span>, <span class="string">'node3'</span>);
+    fprintf(fileID,<span class="string">'  %12i %12i %12i\n'</span>, elements');
+    fclose(fileID);
+    disp(sprintf(<span class="string">'Saved file %s'</span>,elementsFile));
+  <span class="keyword">end</span>
+
+<span class="keyword">end</span>
+
+</pre>
+<h2 id="17">Function GenerateSynapticMatrix.m</h2>
+<pre class="language-matlab">
+<span class="keyword">function</span> W = GenerateSynapticMatrix(nodes,wFun,thresh,dataPath)
+
+<span class="comment">  %% Determine if a files must be saved</span>
+  <span class="keyword">if</span> nargin &lt; 4 || isempty(dataPath)
+    saveFiles = false;
+  <span class="keyword">else</span>
+    saveFiles = true;
+  <span class="keyword">end</span>
+
+  <span class="comment">% Get coordinates</span>
+  x = nodes(:,1); y = nodes(:,2); z = nodes(:,3); n = size(nodes,1);
+
+  <span class="comment">% Generating synaptic matrix (sparsified with threshold)</span>
+  <span class="comment">% We are using here Euclidean distance, which is not correct on folded </span>
+  <span class="comment">% surfaces (hence should change for real cortices)</span>
+  D = sqrt((x - x').^2 + (y - y').^2 + (z - z').^2);
+  W = wFun(D);
+  
+  <span class="comment">% If a threshold is provided, then only elements above threshold</span>
+  <span class="comment">% in absolute value are effective, and a sparse matrix is given</span>
+  innz = find(abs(W) &gt; thresh);
+  W(setdiff(1:n^2,innz)) = 0;
+  sparse(W);
+
+<span class="comment">  %% Save</span>
+  <span class="keyword">if</span> saveFiles
+    
+    <span class="comment">% Set filenames</span>
+    matFile = fullfile(dataPath,<span class="string">'synaptic-matrix.mat'</span>);
+    datFile = fullfile(dataPath,<span class="string">'synaptic-matrix.dat'</span>);
+
+<span class="comment">    %% Save .mat file</span>
+    save(matFile,<span class="string">'W'</span>);
+    disp(sprintf(<span class="string">'Saved file %s'</span>,matFile));
+
+<span class="comment">    %% Save .dat file</span>
+    [row,col,wVal] = find(W);
+    fileID = fopen(datFile,<span class="string">'w'</span>);
+    fprintf(fileID,<span class="string">'#%12s %12s\n'</span>, <span class="string">'numRows'</span>, <span class="string">'numCols'</span>);
+    fprintf(fileID,<span class="string">' %12i %12i\n'</span>, n, n);
+    fprintf(fileID,<span class="string">'# Nonzero elements\n'</span>);
+    fprintf(fileID,<span class="string">'#%12s %12s %20.12s\n'</span>, <span class="string">'i'</span>, <span class="string">'j'</span>, <span class="string">'value'</span>);
+    fprintf(fileID,<span class="string">' %12i %12i %20.12e\n'</span>, row, col, wVal);
+    fclose(fileID);
+    disp(sprintf(<span class="string">'Saved file %s'</span>,datFile));
+
+  <span class="keyword">end</span>
+
+<span class="keyword">end</span>
+
+</pre>
+<h2 id="18">Function NeuralField.m</h2>
+<pre class="language-matlab">
+<span class="keyword">function</span> F = NeuralField(t,z,p,M)
+
+  <span class="comment">% Parameters</span>
+  mu    = p(1);
+  theta = p(2);
+  alpha = p(3);
+  beta  = p(4);
+  gamma = p(5);
+  delta = p(6);
+  nu    = p(7);
+  tau   = p(8);
+
+  <span class="comment">% Split components</span>
+  n = size(z,1)/2; iU = 1:n; iV = n+iU;
+  u = z(iU); v = z(iV);
+
+  <span class="comment">% Firing rate function</span>
+  S = @(u) 1./(1+exp(-mu*(u-theta)));
+
+  <span class="comment">% Right-hand side</span>
+  F = zeros(size(z));
+  F(iU) =  -alpha*u - beta*v + nu*M*S(u);
+  F(iV) = (-gamma*u - delta*v)/tau;
+
+<span class="keyword">end</span>
+
+</pre>
+<h2 id="19">Function SynapticKernelBessel.m</h2>
+<pre class="language-matlab">
+<span class="keyword">function</span> w = SynapticKernelBessel(r)
+
+  f = @(s) s*besselj(0,r*s)/(s^4+s^2+1);
+  w = integral(f,0,1000,<span class="string">'ArrayValued'</span>,true);
+
+<span class="keyword">end</span>
+
+</pre>
+<h2 id="20">Function PlotField.m</h2>
+<pre class="language-matlab">
+<span class="keyword">function</span> fh = PlotField(u,nodes,elem,opts)
+
+  <span class="comment">% Default options</span>
+  <span class="keyword">if</span> ~isfield(opts,<span class="string">'xlim'</span>)
+    opts.xlim = <span class="string">'auto'</span>;
+  <span class="keyword">end</span>
+  <span class="keyword">if</span> ~isfield(opts,<span class="string">'ylim'</span>)
+    opts.ylim = <span class="string">'auto'</span>;
+  <span class="keyword">end</span>
+  <span class="keyword">if</span> ~isfield(opts,<span class="string">'zlim'</span>)
+    opts.zlim = <span class="string">'auto'</span>;
+  <span class="keyword">end</span>
+  <span class="keyword">if</span> ~isfield(opts,<span class="string">'clim'</span>)
+    opts.clim = <span class="string">'auto'</span>;
+  <span class="keyword">end</span>
+  <span class="keyword">if</span> ~isfield(opts,<span class="string">'view'</span>)
+    opts.view = 3;
+  <span class="keyword">end</span>
+  <span class="keyword">if</span> ~isfield(opts,<span class="string">'axis'</span>)
+    opts.axis = <span class="string">'equal'</span>;
+  <span class="keyword">end</span>
+
+  <span class="comment">% Plot</span>
+  fh = trisurf(elem,nodes(:,1),nodes(:,2),nodes(:,3),u);
+  fh.EdgeColor = <span class="string">'#4C566A'</span>; <span class="comment">%'none';</span>
+  fh.EdgeAlpha = 0.4; <span class="comment">%'none';</span>
+  colorbar; 
+  clim(opts.clim);
+  view(opts.view); 
+  axis(opts.axis)
+
+  xlabel(<span class="string">'x'</span>);
+  ylabel(<span class="string">'y'</span>);
+  zlabel(<span class="string">'z'</span>);
+
+  xlim(opts.xlim);
+  ylim(opts.ylim);
+  zlim(opts.zlim);
+
+<span class="keyword">end</span>
+
+</pre>
+<h2 id="21">Function PlotHistory.m</h2>
+<pre class="language-matlab">
+<span class="keyword">function</span> fh = PlotHistory(t,zHist,nodes,elem,opts)
+
+  <span class="comment">% Time steps and number of nodes</span>
+  nt = length(t);
+  n = size(zHist,2)/2; iU = 1:n; iV = n+iU;
+
+  <span class="comment">% Plot initial state</span>
+  fh = PlotState(zHist(1,:)',nodes,elem,opts);
+
+  <span class="comment">% Update dataset</span>
+  <span class="keyword">if</span> nt &gt; 1
+
+    <span class="keyword">for</span> i = 1:nt
+      title = num2str(t(i));
+      fuh = subplot(1,2,1); fuh.Children.CData = zHist(i,iU);
+      fvh = subplot(1,2,2); fvh.Children.CData = zHist(i,iV);
+      drawnow;
+    <span class="keyword">end</span>
+
+  <span class="keyword">end</span>
+
+<span class="keyword">end</span>
+
+</pre>
+<h2 id="22">Function SaveAnimation.m</h2>
+<pre class="language-matlab">
+<span class="keyword">function</span> SaveAnimation(t,uHist,nodes,elem,opts,fileName)
+
+  video = VideoWriter(fileName,<span class="string">'MPEG-4'</span>);
+  myVide.FrameRate = 10;
+  open(video);
+
+  <span class="comment">% Time steps and number of nodes</span>
+  nt = length(t);
+
+  <span class="comment">% Plot initial state</span>
+  fh = PlotField(uHist(1,:)',nodes,elem,opts);
+  set(gca,<span class="string">'visible'</span>,<span class="string">'off'</span>);
+  colorbar <span class="string">off</span>;
+  shading <span class="string">interp</span>;
+
+  <span class="comment">% Update dataset</span>
+  <span class="keyword">if</span> nt &gt; 1
+
+    <span class="keyword">for</span> i = 2:nt
+      fh.CData = uHist(i,:);
+      drawnow;
+
+      frame = getframe(gcf);
+      writeVideo(video,frame);
+    <span class="keyword">end</span>
+
+  <span class="keyword">end</span>
+  close(video);
+  disp(sprintf(<span class="string">'Saved file %s'</span>,fileName));
+<span class="keyword">end</span>
+
+</pre>
+<h2 id="23">Function TriangleElementMeasure.m</h2>
+<pre class="language-matlab">
+<span class="keyword">function</span> S = TriangleElementMeasure(x,y,z)
+
+    S = <span class="keyword">...</span>
+    sqrt(<span class="keyword">...</span>
+       ( x(2)*y(1) - x(3)*y(1) - x(1)*y(2) + x(3)*y(2) + x(1)*y(3) - x(2)*y(3) )^2 <span class="keyword">...</span>
+     + ( x(2)*z(1) - x(3)*z(1) - x(1)*z(2) + x(3)*z(2) + x(1)*z(3) - x(2)*z(3) )^2 <span class="keyword">...</span>
+     + ( y(2)*z(1) - y(3)*z(1) - y(1)*z(2) + y(3)*z(2) + y(1)*z(3) - y(2)*z(3) )^2 <span class="keyword">...</span>
+    )/2;
+
+<span class="keyword">end</span>
+
+</pre>
+<p class="footer">
+<br>
+<a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2023b</a>
+<br>
+</p>
+</div>
+<!--
+##### SOURCE BEGIN #####
+%% Cleaning
+clear all, close all, clc;
+
+%% Set path for input data
+dataPath = '~/GitHub/utrecht-css-mathneuro-masterclass/Data/Spiral-Disk/';
+% dataPath = './';
+
+%% Generate mesh and matrix data, or else load it; save animation
+generateData = false;
+saveAnimation = false;
+
+%% Geometry and mesh parameters 
+R = 30; hmax = 0.03; 
+
+%% Model Parameters
+p(1) = 20;   % mu    
+p(2) = 0.6;  % theta 
+p(3) = 1;    % alpha
+p(4) = 2;    % beta
+p(5) = -2.2; % gamma
+p(6) = 1;    % delta
+p(7) = 3.5;  % nu     
+p(8) = 5;    % tau   
+
+%% Load or generate mesh, synaptic matrix, and FEM matrix
+if generateData
+
+  % Mesh
+  mesh = GenerateMesh(R,hmax,dataPath);
+
+  % Synaptic matrix 
+  r = linspace(-60,60,1000);
+  w = SynapticKernelBessel(r);
+  wFun = griddedInterpolant(r,w);
+  W = GenerateSynapticMatrix(mesh.nodes,wFun,1e-3,dataPath);
+
+  % FEM matrix
+  M = GenerateFEMMatrix(mesh,W,dataPath);
+
+else
+
+  % Mesh
+  fileName = fullfile(dataPath,'mesh.mat');
+  mesh = load(fileName);
+
+  % Synaptic matrix
+  fileName = fullfile(dataPath,'synaptic-matrix.mat');
+  data = load(fileName); W = data.W;
+
+  % FEM matrix
+  fileName = fullfile(dataPath,'fem-matrix.mat');
+  data = load(fileName); M = data.M;
+
+end
+
+%% Initial condition
+x = mesh.nodes(:,1); y = mesh.nodes(:,2); n = length(x);
+iU = 1:n; iV = n+iU;
+u0 = zeros(n,1); u0(find(y > 0)) = 1;
+v0 = zeros(n,1); v0(find(x < 0)) = 4;
+z0 = [u0; v0];
+
+%% Time step
+rhs = @(t,u) NeuralField(t,u,p,M);
+tspan = [0 50];
+[t,zHist] = ode45(rhs,tspan,z0);
+
+%% Animation
+plotOpts.U.clim = [-2 5];
+plotOpts.U.view = [0 90];
+plotOpts.U.xlim = [-R R];
+plotOpts.U.ylim = [-R R];
+plotOpts.U.axis = 'equal';
+plotOpts.V = plotOpts.U;
+PlotHistory(t,zHist,mesh.nodes,mesh.elements,plotOpts);
+
+%% Save animation to file
+if saveAnimation
+  fileName = fullfile(dataPath,'disk-spiral.mp4');
+  figure; SaveAnimation(t,zHist(:,iU),mesh.nodes,mesh.elements,plotOpts.U,fileName);
+end
+
+%% Reset initial condition and restart 
+u0 = zHist(end,iU)' .* ( sqrt(x.^2 + y.^2) > 15 );
+v0 = zHist(end,iV)' .* ( sqrt(x.^2 + y.^2) > 15 );
+z0 = [u0; v0];
+rhs = @(t,u) NeuralField(t,u,p,M);
+tspan = [0 100];
+[t,zHist] = ode45(rhs,tspan,z0);
+
+% Animation
+PlotHistory(t,zHist,mesh.nodes,mesh.elements,plotOpts);
+
+% Save animation to file
+if saveAnimation
+  fileName = fullfile(dataPath,'perturbed-spiral.mp4');
+  figure; SaveAnimation(t,zHist(:,iU),mesh.nodes,mesh.elements,plotOpts.U,fileName);
+end
+
+%%
+% The spiral wave is perturbed, but re-centres in another cortical location
+
+%% Function GenerateMesh.m 
+% <include>GenerateMesh.m</include>
+
+%% Function PlotField.m 
+% <include>PlotField.m</include>
+
+%% Function GenerateFEMMatrix.m
+% <include>GenerateFEMMatrix.m</include>
+
+%% Function GenerateMesh.m
+% <include>GenerateMesh.m</include>
+
+%% Function GenerateSynapticMatrix.m
+% <include>GenerateSynapticMatrix.m</include>
+
+%% Function NeuralField.m
+% <include>NeuralField.m</include>
+
+%% Function SynapticKernelBessel.m
+% <include>SynapticKernelBessel.m</include>
+
+%% Function PlotField.m
+% <include>PlotField.m</include>
+
+%% Function PlotHistory.m
+% <include>PlotHistory.m</include>
+
+%% Function SaveAnimation.m
+% <include>SaveAnimation.m</include>
+
+%% Function TriangleElementMeasure.m
+% <include>TriangleElementMeasure.m</include>
+
+
+##### SOURCE END #####
+-->
+</body>
+</html>

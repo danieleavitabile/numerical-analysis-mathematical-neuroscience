@@ -1,0 +1,16 @@
+
+*.swp
+*.aux
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.synctex*
+*.thm
+*DS_Store
+Data/*
+Manuscript/manuscript.pdf
+Manuscript/manuscript.synctex.gz
+Simulations/Tutorial2/Spiral-Hexagon/animation.mp4

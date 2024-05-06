@@ -1,0 +1,597 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      -->
+<title>driver</title>
+<meta name="generator" content="MATLAB 23.2">
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.date" content="2024-05-06">
+<meta name="DC.source" content="driver.m">
+<style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style>
+</head>
+<body>
+<div class="content">
+<h2>Contents</h2>
+<div>
+<ul>
+<li>
+<a href="#1">Clean</a>
+</li>
+<li>
+<a href="#2">Set path for input data</a>
+</li>
+<li>
+<a href="#3">Toggle for generating or loading data</a>
+</li>
+<li>
+<a href="#4">Generate or load mesh</a>
+</li>
+<li>
+<a href="#5">Plot sparsity pattern of the matrix</a>
+</li>
+<li>
+<a href="#6">Plot sparsity pattern of the matrix</a>
+</li>
+<li>
+<a href="#7">Function GenerateFEMMatrix.m</a>
+</li>
+<li>
+<a href="#8">Function GenerateMesh.m</a>
+</li>
+<li>
+<a href="#9">Function GenerateSynapticMatrix.m</a>
+</li>
+<li>
+<a href="#10">Function GenerateMesh.m</a>
+</li>
+<li>
+<a href="#11">Function PlotField.m</a>
+</li>
+</ul>
+</div>
+<h2 id="1">Clean</h2>
+<pre class="codeinput">clear <span class="string">all</span>, close <span class="string">all</span>, clc;
+</pre>
+<h2 id="2">Set path for input data</h2>
+<pre class="codeinput">dataPath = <span class="string">'~/GitHub/utrecht-css-mathneuro-masterclass/Data/Spots-Disk/'</span>;
+</pre>
+<h2 id="3">Toggle for generating or loading data</h2>
+<pre class="codeinput">generateData = false;
+</pre>
+<h2 id="4">Generate or load mesh</h2>
+<pre class="codeinput">
+<span class="keyword">if</span> generateData
+
+  <span class="comment">% Geometry and mesh parameters</span>
+  R = 30; hmax = 0.03;
+
+  <span class="comment">% Create mesh, see file GenerateMesh.m</span>
+  mesh = GenerateMesh(R,hmax,dataPath);
+
+  <span class="comment">% Synatpic Matrix</span>
+  b = 0.4; wFun = @(r) exp(-b*r) .* (b*sin(r) + cos(r));
+  W = GenerateSynapticMatrix(mesh.nodes,wFun,1e-3,dataPath);
+
+  <span class="comment">% FEM Matrix</span>
+  M = GenerateFEMMatrix(mesh,W,dataPath);
+
+<span class="keyword">else</span>
+
+  <span class="comment">% Load mesh</span>
+  fileName = fullfile(dataPath,<span class="string">'mesh.mat'</span>);
+  mesh = load(fileName);
+
+  <span class="comment">% Synaptic matrix</span>
+  fileName = fullfile(dataPath,<span class="string">'synaptic-matrix.mat'</span>);
+  data = load(fileName); W = data.W;
+
+  <span class="comment">% FEM matrix</span>
+  fileName = fullfile(dataPath,<span class="string">'fem-matrix.mat'</span>);
+  data = load(fileName); M = data.M;
+
+<span class="keyword">end</span>
+</pre>
+<h2 id="5">Plot sparsity pattern of the matrix</h2>
+<pre class="codeinput">figure
+spy(M); title(<span class="string">'Sparsity pattern of the matrix M'</span>)
+</pre>
+<img vspace="5" hspace="5" src="driver_01.png" alt=""> <h2 id="6">Plot sparsity pattern of the matrix</h2>
+<pre class="codeinput">id = 2000;
+plotOpts.clim = <span class="string">'auto'</span>;
+plotOpts.view = [0 90];
+figure;
+PlotField(W(:,id),mesh.nodes,mesh.elements,plotOpts);
+</pre>
+<img vspace="5" hspace="5" src="driver_02.png" alt=""> <h2 id="7">Function GenerateFEMMatrix.m</h2>
+<pre class="language-matlab">
+<span class="keyword">function</span> M = GenerateFEMMatrix(mesh,W,dataPath)
+
+<span class="comment">  %% Determine if a files must be saved</span>
+  <span class="keyword">if</span> nargin &lt; 3 || isempty(dataPath)
+    saveFiles = false;
+  <span class="keyword">else</span>
+    saveFiles = true;
+  <span class="keyword">end</span>
+
+  <span class="comment">% Unpack mesh</span>
+  nodes = mesh.nodes;
+  elem = mesh.elements;
+  x = nodes(:,1); y = nodes(:,2); z = mesh.nodes(:,3); 
+  n = length(x); numEl = size(elem,1);
+
+  <span class="comment">% Get nonzero global indices</span>
+  [row,col,wVal] = find(W);
+  mVal = zeros(size(wVal)); 
+  delta = zeros(size(wVal));
+  txt = sprintf(<span class="string">'Generating FEM matrix with nnz = %i...'</span>, length(mVal));
+  disp(txt)
+
+  <span class="comment">% Compute measure of each element</span>
+  mu = zeros(numEl,1);
+  <span class="keyword">parfor</span> k = 1:numEl
+    mu(k) = TriangleElementMeasure( x(elem(k,:)), y(elem(k,:)), z(elem(k,:)) );
+  <span class="keyword">end</span>
+
+  <span class="comment">% Integration weights over triangles</span>
+  q = 3; rho = ones(q,1)/6;
+
+  <span class="comment">% For each nonzero element in W</span>
+  <span class="keyword">parfor</span> m = 1:length(wVal)
+    
+    <span class="comment">% Every so often display progress</span>
+    <span class="keyword">if</span> mod(m,floor(length(wVal)/5)) == 0
+      txt = sprintf(<span class="string">'      ...filled %i%% of the matrix'</span>, floor(100*m/length(wVal)));
+      disp(txt)
+    <span class="keyword">end</span>
+
+    <span class="comment">% We are now at row(m), and we find elements including col(m):</span>
+    <span class="comment">% col(m) is contained in element(s) k, at local index(ices) l.</span>
+    [k,l] = find(elem == col(m));
+
+    <span class="comment">% Sum all weights (note k, l are vectors), store weights in delta</span>
+    delta(m) = mu(k)' * rho(l);
+    mVal(m) = wVal(m) * delta(m);
+
+  <span class="keyword">end</span>
+
+  <span class="comment">% Ensure only nonzero elements are retained</span>
+  idnnz = find(mVal); 
+  row = row(idnnz); col = col(idnnz); mVal = mVal(idnnz); delta = delta(idnnz);
+
+<span class="comment">  %% Make the matrix sparse, and save it to file</span>
+  M = sparse(row,col,mVal,n,n);
+
+<span class="comment">  %% Default file names</span>
+  <span class="keyword">if</span> saveFiles
+
+    <span class="comment">% Set file names</span>
+    matFile = fullfile(dataPath,<span class="string">'fem-matrix.mat'</span>);
+    datFile = fullfile(dataPath,<span class="string">'fem-matrix.dat'</span>);
+
+    <span class="comment">% Save .mat file</span>
+    save(matFile,<span class="string">'M'</span>);
+    disp(sprintf(<span class="string">'Saved file %s'</span>,matFile));
+
+    <span class="comment">% Save .dat file</span>
+    fileID = fopen(datFile,<span class="string">'w'</span>);
+    fprintf(fileID,<span class="string">'#%12s %12s\n'</span>, <span class="string">'numRows'</span>, <span class="string">'numCols'</span>);
+    fprintf(fileID,<span class="string">' %12i %12i\n'</span>, n, n);
+    fprintf(fileID,<span class="string">'# Nonzero elements\n'</span>);
+    fprintf(fileID,<span class="string">'#%12s %12s %20.12s\n'</span>, <span class="string">'i'</span>, <span class="string">'j'</span>, <span class="string">'value'</span>);
+    fprintf(fileID,<span class="string">' %12i %12i %20.12e\n'</span>, row, col, mVal);
+    fclose(fileID);
+    disp(sprintf(<span class="string">'Saved file %s'</span>,datFile));
+
+  <span class="keyword">end</span>
+  
+<span class="keyword">end</span>
+
+</pre>
+<h2 id="8">Function GenerateMesh.m</h2>
+<pre class="language-matlab">
+<span class="keyword">function</span> mesh = GenerateMesh(r,hmax,dataPath)
+
+<span class="comment">  %% Determine if files must be saved</span>
+  <span class="keyword">if</span> nargin &lt; 3 || isempty(dataPath)
+    saveFiles = false;
+  <span class="keyword">else</span>
+    saveFiles = true;
+  <span class="keyword">end</span>
+
+<span class="comment">  %% Generate mesh of a unit disk using Matlab's PDE toolbox routines. </span>
+  model = createpde();
+  geometryFromEdges(model,@circleg);
+
+  <span class="comment">% Specify a maximal element size</span>
+  mesh = generateMesh(model,<span class="string">"Hmax"</span>,hmax,GeometricOrder=<span class="string">"linear"</span>);
+
+  <span class="comment">% Fetch triangulation, </span>
+  nodes = mesh.Nodes';
+  elements = mesh.Elements';
+
+<span class="comment">  %% Rescale nodes to the disc or radius r, add z = 0 coordinate</span>
+  x = nodes(:,1); y = nodes(:,2); z = zeros(size(x));
+  [theta,rho] = cart2pol(x,y);
+  [x,y] = pol2cart(theta, r*rho);
+  nodes = [x, y, z];
+
+<span class="comment">  %% Finalise output</span>
+  mesh = [];
+  mesh.nodes = nodes;
+  mesh.elements = elements;
+
+  <span class="keyword">if</span> saveFiles
+
+    <span class="comment">% Set filenames</span>
+    meshFile = fullfile(dataPath,<span class="string">'mesh.mat'</span>);
+    nodesFile = fullfile(dataPath,<span class="string">'nodes.dat'</span>);
+    elementsFile = fullfile(dataPath,<span class="string">'elements.dat'</span>);
+
+    <span class="comment">% Save mesh to .mat file</span>
+    save(meshFile,<span class="string">'nodes'</span>,<span class="string">'elements'</span>);
+    disp(sprintf(<span class="string">'Saved file %s'</span>,meshFile));
+
+    <span class="comment">% Save nodes to text file</span>
+    fileID = fopen(nodesFile,<span class="string">'w'</span>);
+    fprintf(fileID,<span class="string">'#%16.12s %16.12s %16.12s\n'</span>, <span class="string">'x'</span>, <span class="string">'y'</span>, <span class="string">'z'</span>);
+    fprintf(fileID,<span class="string">' %16.12f %16.12f %16.12f\n'</span>, x, y, z);
+    fclose(fileID);
+    disp(sprintf(<span class="string">'Saved file %s'</span>,nodesFile));
+      
+    <span class="comment">% Save elements to text file</span>
+    fileID = fopen(elementsFile,<span class="string">'w'</span>);
+    fprintf(fileID,<span class="string">'# %12s %12s %12s\n'</span>, <span class="string">'node 1'</span>, <span class="string">'node2'</span>, <span class="string">'node3'</span>);
+    fprintf(fileID,<span class="string">'  %12i %12i %12i\n'</span>, elements');
+    fclose(fileID);
+    disp(sprintf(<span class="string">'Saved file %s'</span>,elementsFile));
+  <span class="keyword">end</span>
+
+<span class="keyword">end</span>
+
+</pre>
+<h2 id="9">Function GenerateSynapticMatrix.m</h2>
+<pre class="language-matlab">
+<span class="keyword">function</span> W = GenerateSynapticMatrix(nodes,wFun,thresh,dataPath)
+
+<span class="comment">  %% Determine if a files must be saved</span>
+  <span class="keyword">if</span> nargin &lt; 4 || isempty(dataPath)
+    saveFiles = false;
+  <span class="keyword">else</span>
+    saveFiles = true;
+  <span class="keyword">end</span>
+
+  <span class="comment">% Get coordinates</span>
+  x = nodes(:,1); y = nodes(:,2); z = nodes(:,3); n = size(nodes,1);
+
+  <span class="comment">% Generating synaptic matrix (sparsified with threshold)</span>
+  <span class="comment">% We are using here Euclidean distance, which is not correct on folded </span>
+  <span class="comment">% surfaces (hence should change for real cortices)</span>
+  D = sqrt((x - x').^2 + (y - y').^2 + (z - z').^2);
+  W = wFun(D);
+  
+  <span class="comment">% If a threshold is provided, then only elements above threshold</span>
+  <span class="comment">% in absolute value are effective, and a sparse matrix is given</span>
+  innz = find(abs(W) &gt; thresh);
+  W(setdiff(1:n^2,innz)) = 0;
+  sparse(W);
+
+<span class="comment">  %% Save</span>
+  <span class="keyword">if</span> saveFiles
+    
+    <span class="comment">% Set filenames</span>
+    matFile = fullfile(dataPath,<span class="string">'synaptic-matrix.mat'</span>);
+    datFile = fullfile(dataPath,<span class="string">'synaptic-matrix.dat'</span>);
+
+<span class="comment">    %% Save .mat file</span>
+    save(matFile,<span class="string">'W'</span>);
+    disp(sprintf(<span class="string">'Saved file %s'</span>,matFile));
+
+<span class="comment">    %% Save .dat file</span>
+    [row,col,wVal] = find(W);
+    fileID = fopen(datFile,<span class="string">'w'</span>);
+    fprintf(fileID,<span class="string">'#%12s %12s\n'</span>, <span class="string">'numRows'</span>, <span class="string">'numCols'</span>);
+    fprintf(fileID,<span class="string">' %12i %12i\n'</span>, n, n);
+    fprintf(fileID,<span class="string">'# Nonzero elements\n'</span>);
+    fprintf(fileID,<span class="string">'#%12s %12s %20.12s\n'</span>, <span class="string">'i'</span>, <span class="string">'j'</span>, <span class="string">'value'</span>);
+    fprintf(fileID,<span class="string">' %12i %12i %20.12e\n'</span>, row, col, wVal);
+    fclose(fileID);
+    disp(sprintf(<span class="string">'Saved file %s'</span>,datFile));
+
+  <span class="keyword">end</span>
+
+<span class="keyword">end</span>
+
+</pre>
+<pre class="codeinput">
+<span class="comment">% %% Plot mesh</span>
+<span class="comment">% x = mesh.nodes(:,1); y = mesh.nodes(:,2); z = 0*x;</span>
+<span class="comment">% trimesh(mesh.elements,x,y);</span>
+<span class="comment">% axis square</span>
+
+<span class="comment">% %% Plot function</span>
+<span class="comment">% [theta,rho] = cart2pol(x,y);</span>
+<span class="comment">% a = 10; b = 0.05; omega = 4;</span>
+<span class="comment">% u = a*exp(-b*rho).*(b*cos(rho) + sin(rho)).*cos(omega*theta);</span>
+
+<span class="comment">% plotOpts.clim = 'auto';</span>
+<span class="comment">% plotOpts.view = [0 90];</span>
+
+<span class="comment">% %% Plot showing mesh</span>
+<span class="comment">% PlotField(u,mesh.nodes,mesh.elements,plotOpts);</span>
+<span class="comment">% axis tight;</span>
+
+<span class="comment">% %% Interpolated plot</span>
+<span class="comment">% PlotField(u,mesh.nodes,mesh.elements,plotOpts);</span>
+<span class="comment">% shading interp; axis tight;</span>
+</pre>
+<h2 id="10">Function GenerateMesh.m</h2>
+<pre class="language-matlab">
+<span class="keyword">function</span> mesh = GenerateMesh(r,hmax,dataPath)
+
+<span class="comment">  %% Determine if files must be saved</span>
+  <span class="keyword">if</span> nargin &lt; 3 || isempty(dataPath)
+    saveFiles = false;
+  <span class="keyword">else</span>
+    saveFiles = true;
+  <span class="keyword">end</span>
+
+<span class="comment">  %% Generate mesh of a unit disk using Matlab's PDE toolbox routines. </span>
+  model = createpde();
+  geometryFromEdges(model,@circleg);
+
+  <span class="comment">% Specify a maximal element size</span>
+  mesh = generateMesh(model,<span class="string">"Hmax"</span>,hmax,GeometricOrder=<span class="string">"linear"</span>);
+
+  <span class="comment">% Fetch triangulation, </span>
+  nodes = mesh.Nodes';
+  elements = mesh.Elements';
+
+<span class="comment">  %% Rescale nodes to the disc or radius r, add z = 0 coordinate</span>
+  x = nodes(:,1); y = nodes(:,2); z = zeros(size(x));
+  [theta,rho] = cart2pol(x,y);
+  [x,y] = pol2cart(theta, r*rho);
+  nodes = [x, y, z];
+
+<span class="comment">  %% Finalise output</span>
+  mesh = [];
+  mesh.nodes = nodes;
+  mesh.elements = elements;
+
+  <span class="keyword">if</span> saveFiles
+
+    <span class="comment">% Set filenames</span>
+    meshFile = fullfile(dataPath,<span class="string">'mesh.mat'</span>);
+    nodesFile = fullfile(dataPath,<span class="string">'nodes.dat'</span>);
+    elementsFile = fullfile(dataPath,<span class="string">'elements.dat'</span>);
+
+    <span class="comment">% Save mesh to .mat file</span>
+    save(meshFile,<span class="string">'nodes'</span>,<span class="string">'elements'</span>);
+    disp(sprintf(<span class="string">'Saved file %s'</span>,meshFile));
+
+    <span class="comment">% Save nodes to text file</span>
+    fileID = fopen(nodesFile,<span class="string">'w'</span>);
+    fprintf(fileID,<span class="string">'#%16.12s %16.12s %16.12s\n'</span>, <span class="string">'x'</span>, <span class="string">'y'</span>, <span class="string">'z'</span>);
+    fprintf(fileID,<span class="string">' %16.12f %16.12f %16.12f\n'</span>, x, y, z);
+    fclose(fileID);
+    disp(sprintf(<span class="string">'Saved file %s'</span>,nodesFile));
+      
+    <span class="comment">% Save elements to text file</span>
+    fileID = fopen(elementsFile,<span class="string">'w'</span>);
+    fprintf(fileID,<span class="string">'# %12s %12s %12s\n'</span>, <span class="string">'node 1'</span>, <span class="string">'node2'</span>, <span class="string">'node3'</span>);
+    fprintf(fileID,<span class="string">'  %12i %12i %12i\n'</span>, elements');
+    fclose(fileID);
+    disp(sprintf(<span class="string">'Saved file %s'</span>,elementsFile));
+  <span class="keyword">end</span>
+
+<span class="keyword">end</span>
+
+</pre>
+<h2 id="11">Function PlotField.m</h2>
+<pre class="language-matlab">
+<span class="keyword">function</span> fh = PlotField(u,nodes,elem,opts)
+
+  <span class="comment">% Default options</span>
+  <span class="keyword">if</span> ~isfield(opts,<span class="string">'xlim'</span>)
+    opts.xlim = <span class="string">'auto'</span>;
+  <span class="keyword">end</span>
+  <span class="keyword">if</span> ~isfield(opts,<span class="string">'ylim'</span>)
+    opts.ylim = <span class="string">'auto'</span>;
+  <span class="keyword">end</span>
+  <span class="keyword">if</span> ~isfield(opts,<span class="string">'zlim'</span>)
+    opts.zlim = <span class="string">'auto'</span>;
+  <span class="keyword">end</span>
+  <span class="keyword">if</span> ~isfield(opts,<span class="string">'clim'</span>)
+    opts.clim = <span class="string">'auto'</span>;
+  <span class="keyword">end</span>
+  <span class="keyword">if</span> ~isfield(opts,<span class="string">'view'</span>)
+    opts.view = 3;
+  <span class="keyword">end</span>
+  <span class="keyword">if</span> ~isfield(opts,<span class="string">'axis'</span>)
+    opts.axis = <span class="string">'equal'</span>;
+  <span class="keyword">end</span>
+
+  <span class="comment">% Plot</span>
+  fh = trisurf(elem,nodes(:,1),nodes(:,2),nodes(:,3),u);
+  fh.EdgeColor = <span class="string">'#4C566A'</span>; <span class="comment">%'none';</span>
+  fh.EdgeAlpha = 0.4; <span class="comment">%'none';</span>
+  colorbar; 
+  clim(opts.clim);
+  view(opts.view); 
+  axis(opts.axis)
+
+  xlabel(<span class="string">'x'</span>);
+  ylabel(<span class="string">'y'</span>);
+  zlabel(<span class="string">'z'</span>);
+
+  xlim(opts.xlim);
+  ylim(opts.ylim);
+  zlim(opts.zlim);
+
+<span class="keyword">end</span>
+
+</pre>
+<p class="footer">
+<br>
+<a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2023b</a>
+<br>
+</p>
+</div>
+<!--
+##### SOURCE BEGIN #####
+%% Clean
+clear all, close all, clc;
+
+%% Set path for input data
+dataPath = '~/GitHub/utrecht-css-mathneuro-masterclass/Data/Spots-Disk/';
+
+%% Toggle for generating or loading data
+generateData = false;
+
+%% Generate or load mesh 
+if generateData 
+
+  % Geometry and mesh parameters
+  R = 30; hmax = 0.03; 
+
+  % Create mesh, see file GenerateMesh.m
+  mesh = GenerateMesh(R,hmax,dataPath);
+
+  % Synatpic Matrix
+  b = 0.4; wFun = @(r) exp(-b*r) .* (b*sin(r) + cos(r));
+  W = GenerateSynapticMatrix(mesh.nodes,wFun,1e-3,dataPath);
+
+  % FEM Matrix
+  M = GenerateFEMMatrix(mesh,W,dataPath);
+
+else
+
+  % Load mesh
+  fileName = fullfile(dataPath,'mesh.mat');
+  mesh = load(fileName);
+
+  % Synaptic matrix
+  fileName = fullfile(dataPath,'synaptic-matrix.mat');
+  data = load(fileName); W = data.W;
+
+  % FEM matrix
+  fileName = fullfile(dataPath,'fem-matrix.mat');
+  data = load(fileName); M = data.M;
+
+end
+
+%% Plot sparsity pattern of the matrix
+figure
+spy(M); title('Sparsity pattern of the matrix M')
+
+%% Plot sparsity pattern of the matrix
+id = 2000;
+plotOpts.clim = 'auto';
+plotOpts.view = [0 90];
+figure;
+PlotField(W(:,id),mesh.nodes,mesh.elements,plotOpts);
+
+%% Function GenerateFEMMatrix.m
+% <include>GenerateFEMMatrix.m</include>
+
+%% Function GenerateMesh.m
+% <include>GenerateMesh.m</include>
+
+%% Function GenerateSynapticMatrix.m
+% <include>GenerateSynapticMatrix.m</include>
+
+% %% Plot mesh
+% x = mesh.nodes(:,1); y = mesh.nodes(:,2); z = 0*x; 
+% trimesh(mesh.elements,x,y);
+% axis square
+
+% %% Plot function
+% [theta,rho] = cart2pol(x,y);
+% a = 10; b = 0.05; omega = 4;
+% u = a*exp(-b*rho).*(b*cos(rho) + sin(rho)).*cos(omega*theta);
+
+% plotOpts.clim = 'auto';
+% plotOpts.view = [0 90];
+
+% %% Plot showing mesh
+% PlotField(u,mesh.nodes,mesh.elements,plotOpts);
+% axis tight;
+
+% %% Interpolated plot
+% PlotField(u,mesh.nodes,mesh.elements,plotOpts);
+% shading interp; axis tight;
+
+%% Function GenerateMesh.m 
+% <include>GenerateMesh.m</include>
+
+%% Function PlotField.m 
+% <include>PlotField.m</include>
+
+##### SOURCE END #####
+-->
+</body>
+</html>
