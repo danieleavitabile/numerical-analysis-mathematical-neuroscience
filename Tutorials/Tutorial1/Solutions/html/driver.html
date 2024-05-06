@@ -173,7 +173,8 @@ plot(xi,wHatFun(xi),<span class="keyword">...</span>
      xi, 1/(0.9*Ac*dS(0))*ones(size(xi)),<span class="keyword">...</span>
      [-xic xic],wHatFun([-xic xic]),<span class="string">'*'</span><span class="keyword">...</span>
 );
-xlabel(<span class="string">'\xi'</span>); legend({<span class="string">'$\hat W_c(\xi)$'</span>,<span class="string">'1/(1.9 A_c S''(0))'</span>, <span class="string">'1/(0.9 A_c S''(0))'</span>}, <span class="string">'Interpreter'</span>, <span class="string">'latex'</span>);
+xlabel(<span class="string">'\xi'</span>); legend({<span class="string">'$\hat W_c(\xi)$'</span>,<span class="string">'$1/(1.9 A_c S''(0))$'</span>,<span class="keyword">...</span>
+  <span class="string">'$1/(0.9 A_c S''(0))$'</span>}, <span class="string">'Interpreter'</span>, <span class="string">'latex'</span>);
 </pre>
 <img vspace="5" hspace="5" src="driver_02.png" alt=""> <h2 id="7">Question 5</h2>
 <pre class="codeinput">
@@ -310,8 +311,8 @@ surf(X,T,U2); view([0 90]); shading <span class="string">interp</span>;
 xlabel(<span class="string">'x'</span>); ylabel(<span class="string">'t'</span>); zlabel(<span class="string">'u(x,t)'</span>);
 axis <span class="string">tight</span>; colorbar;
 </pre>
-<pre class="codeoutput">Elapsed time is 0.254592 seconds.
-Elapsed time is 0.051614 seconds.
+<pre class="codeoutput">Elapsed time is 0.238762 seconds.
+Elapsed time is 0.055567 seconds.
 </pre>
 <img vspace="5" hspace="5" src="driver_07.png" alt=""> <h2 id="14">Function NeuralField.m</h2>
 <pre class="language-matlab">
@@ -402,7 +403,8 @@ plot(xi,wHatFun(xi),...
      xi, 1/(0.9*Ac*dS(0))*ones(size(xi)),...
      [-xic xic],wHatFun([-xic xic]),'*'...
 ); 
-xlabel('\xi'); legend({'$\hat W_c(\xi)$','1/(1.9 A_c S''(0))', '1/(0.9 A_c S''(0))'}, 'Interpreter', 'latex');
+xlabel('\xi'); legend({'$\hat W_c(\xi)$','$1/(1.9 A_c S''(0))$',...
+  '$1/(0.9 A_c S''(0))$'}, 'Interpreter', 'latex');
 
 %% Question 5
 
