@@ -3,6 +3,7 @@
 \usepackage{damacros}
 \usepackage{amssymb}
 \usepackage{bbm}
+\usepackage{wrapfig}
 
 % Theorem environment for questions: Small-caps header, italize body.
 \theoremstyle{plain}
@@ -88,24 +89,47 @@
 
 
 \section{Introduction}\label{sec:introduction} 
-
-\begin{equation}\label{eq:NF}
+This tutorial deals with the implementation of a basic Finite Element Scheme for the
+standard Neural Field Equation
+\[
+  \label{eq:NF}
   \begin{aligned}
     \partial_{t} u(r,t) & = -u(r,t) + \int_{D} w(r,r') f(u(r',t))\,d r',
-      && (r,t) \in D \times [0,T] \\
+                        && (r,t) \in D \times [0,T] \\
     u(r,0) & = \phi(r)
-      && r \in D.
+           && r \in D.
   \end{aligned}
-\end{equation}
-In this tutorial we will use the notation $r=(x,y,z)$ for points in $\RSet^3$.
+\]
+posed on a generic cortical surface $D \subset \RSet^3$. The exposition is
+non-technical, and downloadable exemplary files for relevant matrices are given to
+simplify the tutorial at a first pass. At the end of the tutorial you will have
+visualised patterns observed in experimental recordings of neuronal activity. A
+theory for numerical schemes for neural fields is given in
+\cite{avitabileProjectionMethodsNeural2023} (see also references therein).
+
 \subsection{Domain and triangulation} \label{ssec:triangulation}
-The cortex $D$ is a compact in $\RSet^3$ with
-polygonal boundary. Further, $D$ is triangulated using $m$ triangles. More precisely,
-we consider a triangulation of $\calT = \{ \tau_\alpha \}_{\alpha = 1}^m$ of $D$ such
-that: \[ \bigcup_{\alpha=1}^m \tau_\alpha = D, \qquad \tau_\alpha^\circ \cap
-\tau_\beta^\circ = \varnothing, \quad \alpha \neq \beta \] where $\tau_\alpha^\circ$
-denotes the interior of triangle $\tau_{\alpha}$. We will denote by $\mu_\alpha$ the
-area of the triangle $\tau_\alpha$ (see schematic in \cref{fig:triangulation}).
+
+\begin{wrapfigure}{r}{0.5\textwidth}
+  \begin{center}
+    \includegraphics[width=0.4\textwidth]{brain-mesh}
+  \end{center}
+  \caption{Example of a cortical mesh
+    \href{https://www.med.unc.edu/bric/scientists-create-new-map-of-the-developing-cerebral-cortex/}{(website)}
+  }
+\end{wrapfigure}
+We will assume that the cortex $D$ to be a piecewise-smooth compact surface
+$\RSet^3$. More specifically, $D$ is triangulated using $m$ triangles: we consider a
+triangulation of $\calT = \{ \tau_\alpha \}_{\alpha = 1}^m$ of $D$ such
+that 
+\[ 
+  \bigcup_{\alpha=1}^m \tau_\alpha = D, \qquad 
+  \tau_\alpha^\circ \cap \tau_\beta^\circ = \varnothing, \quad \alpha \neq \beta 
+\] 
+where $\tau_\alpha^\circ$ denotes the interior of triangle $\tau_{\alpha}$. We will
+denote by $\mu_\alpha$ the area of the triangle $\tau_\alpha$. We will use
+$r=(x,y,z)$ for points in $\RSet^3$, and we number the nodes of the triangulation
+from $1$ to $n$, with coordinates $\{ r_i \}_{i=1}^n$.
+
 
 \begin{figure}
   \centering
@@ -118,12 +142,12 @@ we show the corresponding element matrix $E$.}
 
 It is convenient to introduce a family of mappings $\{ B_\alpha \}_{\alpha}$ which
 send the reference triangle $\sigma$ (the standard simplex in $\RSet^2$) to the
-triangles $\tau_\alpha$, that is, $B_\alpha \colon \sigma \mapsto \tau_{\alpha}$.
+triangles $\{\tau_\alpha\}_{\alpha}$, that is, $B_\alpha \colon \sigma \mapsto \tau_{\alpha}$.
 The standard simplex in $\RSet^2$ is the triangle with nodes $\rho_1=(0,0)$,
-$\rho_2=(1,0)$, $\rho_3=(0,1)$.
+$\rho_2=(1,0)$, $\rho_3=(0,1)$ (see schematic in \cref{fig:triangulation}).
 
-In this tutorial we use matrices to encode information about triangulation. Nodes are
-numbered from $1$ to $n$, and their coordinates are in a $n$-by-$3$ matrix $N$, so
+In this tutorial we use matrices to encode information about triangulation.
+Coordinates of the nodes are stored in a $n$-by-$3$ matrix $N$, so
 that the $i$th row of $N$ contains the coordinates $r_i$, while triangular elements
 are stored in an $m$-by-$3$ matrix $E$, so that the $\alpha$th row of $M$ indicates
 that triangle $\tau_\alpha$ has vertices at nodes $\{ n_{\alpha,1},
@@ -244,8 +268,9 @@ w(r_i,r_j)\delta_j$.
   $E$, respectively, in the format specified in \cref{ssec:triangulation}.
 
   \begin{enumerate}
-    \item Download the file \da[]{Add link}. The data is contained in a binary file
-      \texttt{mesh.mat}, which contains \texttt{nodes} and \texttt{elements} fields.
+    \item Download \href{https://zenodo.org/records/11120604}{the accompanying
+  dataset}. The relevant data is in the folder \lstinline|Spots-Disk| folder
+      in a binary file \texttt{mesh.mat}, which contains \texttt{nodes} and \texttt{elements} fields.
       This binary MATLAB format can be downloaded also in Python (see instructions
       \href{https://docs.scipy.org/doc/scipy/reference/generated/scipy.io.loadmat.html}{here}).
       Alternatively, the matrices $N$ and $E$ can be imported from the text files
@@ -316,11 +341,13 @@ M(rows(i),cols(i)) = vals(i);
 \begin{question}\label{question:spots}
   Cortical regions can support patterns that occupy the full space, 
   (as we have seen in a previous tutorial on Turing-like bifurcations), as well as
-  \textit{localised patterns of activity}. In a localised pattern, high activity is
-  \da[]{Add reference to }
-  found only in a confined region of the cortex, that remains inactive elsewhere. We
-  are going to explore these patterns as solutions to the following neural field
-  equation
+  \textit{localised patterns of activity}. Spots of activity in brain experiments can
+  be found in connection with grid cells \cite{haftingMicrostructureSpatialMap2005} (see
+  also \href{https://www.youtube.com/watch?v=i9GiLBXWAHI}{this video}).
+
+  In a localised pattern, high activity is found only in a confined region of the
+  cortex, that remains inactive elsewhere. We are going to explore these patterns as
+  solutions to the following neural field equation
 \begin{equation}
   \begin{aligned}
     \partial_{t} u(r,t) & = -u(r,t) + \int_{D} w(r,r') f(u(r',t))\,d r',
@@ -362,17 +389,19 @@ M(rows(i),cols(i)) = vals(i);
 
 \begin{figure}
   \centering
-  \includegraphics[width = 0.4\textwidth]{spots}
-  \includegraphics[width = 0.4\textwidth]{spiral}
+  % \includegraphics[width = 0.4\textwidth]{spots}
+  % \includegraphics[width = 0.4\textwidth]{spiral}
+  \includegraphics[width = 0.8\textwidth]{patterns}
   \caption{Snapshot of the activity variable $u$ from time simulations of
   \cref{question:spots,question:spiral}.}
   \label{fig:patterns}
 \end{figure}
   
 \begin{question}\label{question:spiral}
-  In some cases, cortices form spatiotemporal patterns of activity.
-  One of the most striking ones are rotating waves. \da[]{Add reference or link,
-  biological relevance?}
+  Cortices support spatiotemporal patterns of activity, and one of the most striking one are rotating waves
+  \cite{huangSpiralWavesDisinhibited2004a} (for an experimental recording, download
+  \href{https://www.jneurosci.org/highwire/filestream/597325/field_highwire_adjunct_files/4/spiral-s3081907-4500-6775.mpg}{this
+  video}). 
 
   We investigate the formation of spiral waves in neural fields with a \textit{recovery variable}
   $v$ in addition to the activity variable $u$. Simulate the occurrence of spiral
@@ -425,7 +454,7 @@ M(rows(i),cols(i)) = vals(i);
   in firing rates considered in other questions of the tutorial.
 
   Observe the formation of spiral waves for $\tau = 5$, $\alpha =1$, $\beta =2$, $\gamma
-  =-2.2$, $\delta =1$, $T=50$, and initial conditions given by
+  =-2.2$, $\delta =1$, $\nu = 3.5$, $T=50$, and initial conditions given by
   \[
     \phi(x,y,z) = 
     \begin{cases}
@@ -458,8 +487,7 @@ simulation with initial conditions
 and study whether the spiral survives to this large perturbation.
 \end{question}
 
+\bibliographystyle{siamplain}
+\bibliography{references}
 
-
-% \bibliographystyle{siamplain}
-% \bibliography{references}
 \end{document}
