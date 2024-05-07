@@ -13,7 +13,7 @@ These tutorials are written for the masterclass [*Numerical and Analytical Metho
 ## Getting started
 1. Download the latest release of the tutorial, under **Releases**, on the right-hand-side of the present webpage, or [here](https://doi.org/10.5281/zenodo.11124322).
 1. Download the [accompanying dataset](https://zenodo.org/records/11120604).
-1. Click on `Tutorial1` above, which contains links to files in the `src` folder.
+1. Click on `Tutorial1` above, which contains links to files in the `Tutorial` folder.
 1. Solutions to Tutorial 1 are available in an html file, linked in the tutorial pdf so you can browse at once code and generated graphs.
 1. You should be able to progress even if you get stuck on a question: try to get some tips from the html file.
 1. Some tasks are longer than others, and involve a substantial amount of coding, which is another reason for providing solutions. Even if you find it too cumbersome to write code for every single question, you are expected to have a full grasp of the solutions before progressing.
