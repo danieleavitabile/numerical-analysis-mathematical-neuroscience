@@ -1,0 +1,12 @@
+cff-version: 1.2.0
+message: "Please cite this tutorial using both refernces."
+authors:
+- family-names: "Avitabile"
+  given-names: "Daniele"
+  orcid: "https://orcid.org/0000-0003-3714-7973
+title: "Tutorials on Numerical and Analytical Methods for Spatially-Extended
+Neurobiological Networks"
+version: 1.0.0
+doi: 10.5281/zenodo.1234
+date-released: 2024-04-07
+url: "https://github.com/danieleavitabile/numerical-analysis-mathematical-neuroscience"
