@@ -1,7 +1,7 @@
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.11124322.svg)](https://doi.org/10.5281/zenodo.11124322)
 
-<img src="ttps://github.com/danieleavitabile/numerical-analysis-mathematical-neuroscience/blob/main/assets/brain.png" width="48">
+<img src="https://github.com/danieleavitabile/numerical-analysis-mathematical-neuroscience/blob/main/assets/brain.png?raw=true" width="48">
 
 # Tutorials on numerical analysis for neurobiological networks
 
