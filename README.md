@@ -5,7 +5,7 @@
 This is material written for the masterclass [*Numerical and Analytical Methods for Spatially-Extended Neurobiological Networks*](https://www.uu.nl/en/events/ccss-masterclass-on-numerical-and-analytical-methods-for-spatially-extended-neurobiological-networks?ref=danieleavitabile.com), held at the Centre for Complex Systems Studies, University of Utrecht in May 2024.
 
 ## Getting started
-1. Download the latest release of the tutorial, under **Releases**, on the right-hand-side of the present webpage, or [here](https://github.com/danieleavitabile/nonlinear-dynamical-systems-course-tutorials/releases).
+1. Download the latest release of the tutorial, under **Releases**, on the right-hand-side of the present webpage, or [here](https://doi.org/10.5281/zenodo.11124322).
 1. Download the [accompanying dataset](https://zenodo.org/records/11120604).
 1. Go to the `Tutorial/Tutorial1` folder, which contains links to files in the `src` folder (no need to enter the latter folder yet). 
 1. Open `Tutorial1/tutorial-01.pdf` and start working: make a brand new folder on your computer for Tutorial 1, and populate it with your own code (keep solutions on a side).
@@ -14,7 +14,7 @@ This is material written for the masterclass [*Numerical and Analytical Methods 
 1. Some tasks are longer than others, and involve a substantial amount of coding, which is another reason for providing solutions. Even if you find it too cumbersome to write code for every single question, you are expected to have a full grasp of the solutions before progressing.
 1. The code that generated `Tutorial1/solutions-01-code.html` is in `src/Tutorial1/Solutions/Code`, and you may need access to it for some tasks. While you are welcome to reuse functions in this directory in other tutorials, my strong advice is to write your own files first, and then amend them after you have seen the solutions, if you find it useful. Remember that there is not a unique way to accomplish a task.
 
-You are welcome to send me pull requests if you correct errors in the tutorial questions or solutions: all sources, including the LaTeX files for the questions are in the `src/` directory, so you can modify them too (you'll be acknowledged or co-author the tutorials).
+You are welcome to send me pull requests if you correct errors in the tutorial questions or solutions: all sources, including the LaTeX files for the questions are in the `src/` directory, so you can modify them too (your work will be acknowledged explicitly).
 
 I am keen to include Julia and Python versions of the solutions, so do not hesitate to contact me if you want to help.
 
