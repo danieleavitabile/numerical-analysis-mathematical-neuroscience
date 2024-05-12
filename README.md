@@ -11,9 +11,9 @@ These tutorials are written for the masterclass [*Numerical and Analytical Metho
 * [Tutorial 2](https://github.com/danieleavitabile/numerical-analysis-mathematical-neuroscience/blob/main/Tutorials/Tutorial2/Questions/tutorial-2.pdf)
 
 The tutorials are self-contained, but they complemented the following lectures, which may also be of interest (some parts of the lectures were done on the board):
-* [Lecture 1](https://github.com/danieleavitabile/numerical-analysis-mathematical-neuroscience/blob/main/Tutorials/Lectures/lecture-1.png)
-* [Lecture 2](https://github.com/danieleavitabile/numerical-analysis-mathematical-neuroscience/blob/main/Tutorials/Lectures/lecture-2.pdf)
-* [Lecture 3](https://github.com/danieleavitabile/numerical-analysis-mathematical-neuroscience/blob/main/Tutorials/Lectures/lecture-2.pdf)
+* [Lecture 1](https://github.com/danieleavitabile/numerical-analysis-mathematical-neuroscience/blob/main/Lectures/lecture-1.png)
+* [Lecture 2](https://github.com/danieleavitabile/numerical-analysis-mathematical-neuroscience/blob/main/Lectures/lecture-2.pdf)
+* [Lecture 3](https://github.com/danieleavitabile/numerical-analysis-mathematical-neuroscience/blob/main/Lectures/lecture-2.pdf)
   
 ## Getting started
 1. Download the latest release of the tutorial, under **Releases**, on the right-hand-side of the present webpage, or [here](https://doi.org/10.5281/zenodo.11124322).
