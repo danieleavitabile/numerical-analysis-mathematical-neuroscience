@@ -233,8 +233,8 @@ is not used in calculations). The equation
 \]
 for instance, is approximated by the ODE
 \[
-  U_{n/2+1}'(t) = -U_{n/2+2} + h \sum_{j=1}^n w(-x_j) f(U_j) h
-                = -U_{n/2+1} + Ah \sum_{j=1}^n W_jf(U_j) h,
+  U_{n/2+1}'(t) = -U_{n/2+2} + h \sum_{j=1}^n w(-x_j) f(U_j) 
+                = -U_{n/2+1} + Ah \sum_{j=1}^n W_jf(U_j) ,
 \]
 and the corresponding row of the matrix $M$ is highlighted in red. Similarly
 \[
@@ -242,8 +242,8 @@ and the corresponding row of the matrix $M$ is highlighted in red. Similarly
 \]
 is approximated by
 \[
-  U_{n/2+2}'(t) = -U_{n/2+2} + h \sum_{j=1}^n w(h-x_j) f(U_j) h
-                = -U_{n/2+2} + h \sum_{j=1}^n w(x_{j-1}) f(U_j) h,
+  U_{n/2+2}'(t) = -U_{n/2+2} + h \sum_{j=1}^n w(h-x_j) f(U_j)
+                = -U_{n/2+2} + h \sum_{j=1}^n w(x_{j-1}) f(U_j),
 \]
 which, upon recalling that $x_0=x_n$ by periodicity, gives row $n/2+2$ of the matrix.
 The fact that $M$ is circulant descends from the integral in \cref{eq:NFPer} being
