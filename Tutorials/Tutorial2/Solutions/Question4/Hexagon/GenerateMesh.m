@@ -45,7 +45,7 @@ function mesh = GenerateMesh(r,hmax,dataPath)
     % Save nodes to text file
     fileID = fopen(nodesFile,'w');
     fprintf(fileID,'#%16.12s %16.12s %16.12s\n', 'x', 'y', 'z');
-    fprintf(fileID,' %16.12f %16.12f %16.12f\n', x, y, z);
+    fprintf(fileID,' %16.12f %16.12f %16.12f\n', [x y z]');
     fclose(fileID);
     disp(sprintf('Saved file %s',nodesFile));
       

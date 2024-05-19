@@ -72,7 +72,7 @@ function M = GenerateFEMMatrix(mesh,W,dataPath)
     fprintf(fileID,' %12i %12i\n', n, n);
     fprintf(fileID,'# Nonzero elements\n');
     fprintf(fileID,'#%12s %12s %20.12s\n', 'i', 'j', 'value');
-    fprintf(fileID,' %12i %12i %20.12e\n', row, col, mVal);
+    fprintf(fileID,' %12i %12i %20.12e\n', [row col mVal]');
     fclose(fileID);
     disp(sprintf('Saved file %s',datFile));
 

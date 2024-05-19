@@ -9,7 +9,7 @@ To make changes, update the MATLAB code and republish this document.
 <title>driver</title>
 <meta name="generator" content="MATLAB 23.2">
 <link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
-<meta name="DC.date" content="2024-05-06">
+<meta name="DC.date" content="2024-05-19">
 <meta name="DC.source" content="driver.m">
 <style type="text/css">
 html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
@@ -113,37 +113,37 @@ table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px soli
 <a href="#11">Reset initial condition and restart</a>
 </li>
 <li>
-<a href="#12">Function GenerateMesh.m</a>
+<a href="#13">Function GenerateMesh.m</a>
 </li>
 <li>
-<a href="#13">Function PlotField.m</a>
+<a href="#14">Function PlotField.m</a>
 </li>
 <li>
-<a href="#14">Function GenerateFEMMatrix.m</a>
+<a href="#15">Function GenerateFEMMatrix.m</a>
 </li>
 <li>
-<a href="#15">Function GenerateMesh.m</a>
+<a href="#16">Function GenerateMesh.m</a>
 </li>
 <li>
-<a href="#16">Function GenerateSynapticMatrix.m</a>
+<a href="#17">Function GenerateSynapticMatrix.m</a>
 </li>
 <li>
-<a href="#17">Function NeuralField.m</a>
+<a href="#18">Function NeuralField.m</a>
 </li>
 <li>
-<a href="#18">Function SynapticKernelBessel.m</a>
+<a href="#19">Function SynapticKernelBessel.m</a>
 </li>
 <li>
-<a href="#19">Function PlotField.m</a>
+<a href="#20">Function PlotField.m</a>
 </li>
 <li>
-<a href="#20">Function PlotHistory.m</a>
+<a href="#21">Function PlotHistory.m</a>
 </li>
 <li>
-<a href="#21">Function SaveAnimation.m</a>
+<a href="#22">Function SaveAnimation.m</a>
 </li>
 <li>
-<a href="#22">Function TriangleElementMeasure.m</a>
+<a href="#23">Function TriangleElementMeasure.m</a>
 </li>
 </ul>
 </div>
@@ -151,12 +151,12 @@ table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px soli
 <pre class="codeinput">clear <span class="string">all</span>, close <span class="string">all</span>, clc;
 </pre>
 <h2 id="2">Set path for input data</h2>
-<pre class="codeinput">dataPath = <span class="string">'~/GitHub/utrecht-css-mathneuro-masterclass/Data/Spiral-Hexagon/'</span>;
+<pre class="codeinput">dataPath = <span class="string">'~/GitHub/numerical-analysis-mathematical-neuroscience/Data/Spiral-Hexagon/'</span>;
 <span class="comment">% dataPath = './';</span>
 </pre>
 <h2 id="3">Generate mesh and matrix data, or else load it; save animation</h2>
 <pre class="codeinput">generateData = false;
-saveAnimation = true;
+saveAnimation = false;
 </pre>
 <h2 id="4">Geometry and mesh parameters</h2>
 <pre class="codeinput">R = 30; hmax = 0.03;
@@ -231,9 +231,7 @@ PlotHistory(t,zHist,mesh.nodes,mesh.elements,plotOpts);
   figure; SaveAnimation(t,zHist(:,iU),mesh.nodes,mesh.elements,plotOpts.U,fileName);
 <span class="keyword">end</span>
 </pre>
-<pre class="codeoutput">Saved file ~/GitHub/utrecht-css-mathneuro-masterclass/Data/Spiral-Hexagon/hexagon-spiral.mp4
-</pre>
-<img vspace="5" hspace="5" src="driver_02.png" alt=""> <h2 id="11">Reset initial condition and restart</h2>
+<h2 id="11">Reset initial condition and restart</h2>
 <pre class="codeinput">u0 = zHist(end,iU)' .* ( sqrt(x.^2 + y.^2) &gt; 15 );
 v0 = zHist(end,iV)' .* ( sqrt(x.^2 + y.^2) &gt; 15 );
 z0 = [u0; v0];
@@ -250,9 +248,8 @@ PlotHistory(t,zHist,mesh.nodes,mesh.elements,plotOpts);
   figure; SaveAnimation(t,zHist(:,iU),mesh.nodes,mesh.elements,plotOpts.U,fileName);
 <span class="keyword">end</span>
 </pre>
-<pre class="codeoutput">Saved file ~/GitHub/utrecht-css-mathneuro-masterclass/Data/Spiral-Hexagon/perturbed-spiral.mp4
-</pre>
-<img vspace="5" hspace="5" src="driver_03.png" alt=""> <img vspace="5" hspace="5" src="driver_04.png" alt=""> <h2 id="12">Function GenerateMesh.m</h2>
+<img vspace="5" hspace="5" src="driver_02.png" alt=""> <p>The spiral wave is perturbed, but re-centres in another cortical location</p>
+<h2 id="13">Function GenerateMesh.m</h2>
 <pre class="language-matlab">
 <span class="keyword">function</span> mesh = GenerateMesh(r,hmax,dataPath)
 
@@ -301,7 +298,7 @@ PlotHistory(t,zHist,mesh.nodes,mesh.elements,plotOpts);
     <span class="comment">% Save nodes to text file</span>
     fileID = fopen(nodesFile,<span class="string">'w'</span>);
     fprintf(fileID,<span class="string">'#%16.12s %16.12s %16.12s\n'</span>, <span class="string">'x'</span>, <span class="string">'y'</span>, <span class="string">'z'</span>);
-    fprintf(fileID,<span class="string">' %16.12f %16.12f %16.12f\n'</span>, x, y, z);
+    fprintf(fileID,<span class="string">' %16.12f %16.12f %16.12f\n'</span>, [x y z]');
     fclose(fileID);
     disp(sprintf(<span class="string">'Saved file %s'</span>,nodesFile));
       
@@ -316,7 +313,7 @@ PlotHistory(t,zHist,mesh.nodes,mesh.elements,plotOpts);
 <span class="keyword">end</span>
 
 </pre>
-<h2 id="13">Function PlotField.m</h2>
+<h2 id="14">Function PlotField.m</h2>
 <pre class="language-matlab">
 <span class="keyword">function</span> fh = PlotField(u,nodes,elem,opts)
 
@@ -360,7 +357,7 @@ PlotHistory(t,zHist,mesh.nodes,mesh.elements,plotOpts);
 <span class="keyword">end</span>
 
 </pre>
-<h2 id="14">Function GenerateFEMMatrix.m</h2>
+<h2 id="15">Function GenerateFEMMatrix.m</h2>
 <pre class="language-matlab">
 <span class="keyword">function</span> M = GenerateFEMMatrix(mesh,W,dataPath)
 
@@ -445,7 +442,7 @@ PlotHistory(t,zHist,mesh.nodes,mesh.elements,plotOpts);
 <span class="keyword">end</span>
 
 </pre>
-<h2 id="15">Function GenerateMesh.m</h2>
+<h2 id="16">Function GenerateMesh.m</h2>
 <pre class="language-matlab">
 <span class="keyword">function</span> mesh = GenerateMesh(r,hmax,dataPath)
 
@@ -494,7 +491,7 @@ PlotHistory(t,zHist,mesh.nodes,mesh.elements,plotOpts);
     <span class="comment">% Save nodes to text file</span>
     fileID = fopen(nodesFile,<span class="string">'w'</span>);
     fprintf(fileID,<span class="string">'#%16.12s %16.12s %16.12s\n'</span>, <span class="string">'x'</span>, <span class="string">'y'</span>, <span class="string">'z'</span>);
-    fprintf(fileID,<span class="string">' %16.12f %16.12f %16.12f\n'</span>, x, y, z);
+    fprintf(fileID,<span class="string">' %16.12f %16.12f %16.12f\n'</span>, [x y z]');
     fclose(fileID);
     disp(sprintf(<span class="string">'Saved file %s'</span>,nodesFile));
       
@@ -509,7 +506,7 @@ PlotHistory(t,zHist,mesh.nodes,mesh.elements,plotOpts);
 <span class="keyword">end</span>
 
 </pre>
-<h2 id="16">Function GenerateSynapticMatrix.m</h2>
+<h2 id="17">Function GenerateSynapticMatrix.m</h2>
 <pre class="language-matlab">
 <span class="keyword">function</span> W = GenerateSynapticMatrix(nodes,wFun,thresh,dataPath)
 
@@ -562,7 +559,7 @@ PlotHistory(t,zHist,mesh.nodes,mesh.elements,plotOpts);
 <span class="keyword">end</span>
 
 </pre>
-<h2 id="17">Function NeuralField.m</h2>
+<h2 id="18">Function NeuralField.m</h2>
 <pre class="language-matlab">
 <span class="keyword">function</span> F = NeuralField(t,z,p,M)
 
@@ -591,7 +588,7 @@ PlotHistory(t,zHist,mesh.nodes,mesh.elements,plotOpts);
 <span class="keyword">end</span>
 
 </pre>
-<h2 id="18">Function SynapticKernelBessel.m</h2>
+<h2 id="19">Function SynapticKernelBessel.m</h2>
 <pre class="language-matlab">
 <span class="keyword">function</span> w = SynapticKernelBessel(r)
 
@@ -601,7 +598,7 @@ PlotHistory(t,zHist,mesh.nodes,mesh.elements,plotOpts);
 <span class="keyword">end</span>
 
 </pre>
-<h2 id="19">Function PlotField.m</h2>
+<h2 id="20">Function PlotField.m</h2>
 <pre class="language-matlab">
 <span class="keyword">function</span> fh = PlotField(u,nodes,elem,opts)
 
@@ -645,7 +642,7 @@ PlotHistory(t,zHist,mesh.nodes,mesh.elements,plotOpts);
 <span class="keyword">end</span>
 
 </pre>
-<h2 id="20">Function PlotHistory.m</h2>
+<h2 id="21">Function PlotHistory.m</h2>
 <pre class="language-matlab">
 <span class="keyword">function</span> fh = PlotHistory(t,zHist,nodes,elem,opts)
 
@@ -671,7 +668,7 @@ PlotHistory(t,zHist,mesh.nodes,mesh.elements,plotOpts);
 <span class="keyword">end</span>
 
 </pre>
-<h2 id="21">Function SaveAnimation.m</h2>
+<h2 id="22">Function SaveAnimation.m</h2>
 <pre class="language-matlab">
 <span class="keyword">function</span> SaveAnimation(t,uHist,nodes,elem,opts,fileName)
 
@@ -705,7 +702,7 @@ PlotHistory(t,zHist,mesh.nodes,mesh.elements,plotOpts);
 <span class="keyword">end</span>
 
 </pre>
-<h2 id="22">Function TriangleElementMeasure.m</h2>
+<h2 id="23">Function TriangleElementMeasure.m</h2>
 <pre class="language-matlab">
 <span class="keyword">function</span> S = TriangleElementMeasure(x,y,z)
 
@@ -731,12 +728,12 @@ PlotHistory(t,zHist,mesh.nodes,mesh.elements,plotOpts);
 clear all, close all, clc;
 
 %% Set path for input data
-dataPath = '~/GitHub/utrecht-css-mathneuro-masterclass/Data/Spiral-Hexagon/';
+dataPath = '~/GitHub/numerical-analysis-mathematical-neuroscience/Data/Spiral-Hexagon/';
 % dataPath = './';
 
 %% Generate mesh and matrix data, or else load it; save animation
 generateData = false;
-saveAnimation = true;
+saveAnimation = false;
 
 %% Geometry and mesh parameters 
 R = 30; hmax = 0.03; 
@@ -825,6 +822,9 @@ if saveAnimation
   fileName = fullfile(dataPath,'perturbed-spiral.mp4');
   figure; SaveAnimation(t,zHist(:,iU),mesh.nodes,mesh.elements,plotOpts.U,fileName);
 end
+
+%%
+% The spiral wave is perturbed, but re-centres in another cortical location
 
 %% Function GenerateMesh.m 
 % <include>GenerateMesh.m</include>

@@ -2,7 +2,7 @@
 clear all, close all, clc;
 
 %% Set path for input data
-dataPath = '~/GitHub/utrecht-css-mathneuro-masterclass/Data/Spiral-Hexagon/';
+dataPath = '~/GitHub/numerical-analysis-mathematical-neuroscience/Data/Spiral-Hexagon/';
 % dataPath = './';
 
 %% Generate mesh and matrix data, or else load it; save animation

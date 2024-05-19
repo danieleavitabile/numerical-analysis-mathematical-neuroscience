@@ -2,12 +2,12 @@
 clear all, close all, clc;
 
 %% Set path for input data
-dataPath = '~/GitHub/utrecht-css-mathneuro-masterclass/Data/Spiral-Disk/';
+dataPath = '~/GitHub/numerical-analysis-mathematical-neuroscience/Data/Spiral-Disk/';
 % dataPath = './';
 
 %% Generate mesh and matrix data, or else load it; save animation
 generateData = false;
-saveAnimation = true;
+saveAnimation = false;
 
 %% Geometry and mesh parameters 
 R = 30; hmax = 0.03; 

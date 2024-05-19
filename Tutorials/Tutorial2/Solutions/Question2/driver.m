@@ -2,7 +2,7 @@
 clear all, close all, clc;
 
 %% Set path for input data
-dataPath = '~/GitHub/utrecht-css-mathneuro-masterclass/Data/Spots-Disk/';
+dataPath = '~/GitHub/numerical-analysis-mathematical-neuroscience/Data/Spots-Disk/';
 
 %% Toggle for generating or loading data
 generateData = false;
@@ -48,7 +48,7 @@ id = 2000;
 plotOpts.clim = 'auto';
 plotOpts.view = [0 90];
 figure;
-PlotField(W(:,id),mesh.nodes,mesh.elements,plotOpts);
+PlotField(full(W(:,id)),mesh.nodes,mesh.elements,plotOpts);
 
 %% Function GenerateFEMMatrix.m
 % <include>GenerateFEMMatrix.m</include>

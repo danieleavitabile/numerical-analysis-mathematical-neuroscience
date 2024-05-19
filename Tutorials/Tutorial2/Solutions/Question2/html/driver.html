@@ -9,7 +9,7 @@ To make changes, update the MATLAB code and republish this document.
 <title>driver</title>
 <meta name="generator" content="MATLAB 23.2">
 <link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
-<meta name="DC.date" content="2024-05-06">
+<meta name="DC.date" content="2024-05-19">
 <meta name="DC.source" content="driver.m">
 <style type="text/css">
 html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
@@ -95,7 +95,7 @@ table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px soli
 <a href="#5">Plot sparsity pattern of the matrix</a>
 </li>
 <li>
-<a href="#6">Plot sparsity pattern of the matrix</a>
+<a href="#6">Plot of the synaptic connections of node 2000;</a>
 </li>
 <li>
 <a href="#7">Function GenerateFEMMatrix.m</a>
@@ -118,7 +118,7 @@ table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px soli
 <pre class="codeinput">clear <span class="string">all</span>, close <span class="string">all</span>, clc;
 </pre>
 <h2 id="2">Set path for input data</h2>
-<pre class="codeinput">dataPath = <span class="string">'~/GitHub/utrecht-css-mathneuro-masterclass/Data/Spots-Disk/'</span>;
+<pre class="codeinput">dataPath = <span class="string">'~/GitHub/numerical-analysis-mathematical-neuroscience/Data/Spots-Disk/'</span>;
 </pre>
 <h2 id="3">Toggle for generating or loading data</h2>
 <pre class="codeinput">generateData = false;
@@ -160,12 +160,12 @@ table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px soli
 <pre class="codeinput">figure
 spy(M); title(<span class="string">'Sparsity pattern of the matrix M'</span>)
 </pre>
-<img vspace="5" hspace="5" src="driver_01.png" alt=""> <h2 id="6">Plot sparsity pattern of the matrix</h2>
+<img vspace="5" hspace="5" src="driver_01.png" alt=""> <h2 id="6">Plot of the synaptic connections of node 2000;</h2>
 <pre class="codeinput">id = 2000;
 plotOpts.clim = <span class="string">'auto'</span>;
 plotOpts.view = [0 90];
 figure;
-PlotField(W(:,id),mesh.nodes,mesh.elements,plotOpts);
+PlotField(full(W(:,id)),mesh.nodes,mesh.elements,plotOpts);
 </pre>
 <img vspace="5" hspace="5" src="driver_02.png" alt=""> <h2 id="7">Function GenerateFEMMatrix.m</h2>
 <pre class="language-matlab">
@@ -243,7 +243,7 @@ PlotField(W(:,id),mesh.nodes,mesh.elements,plotOpts);
     fprintf(fileID,<span class="string">' %12i %12i\n'</span>, n, n);
     fprintf(fileID,<span class="string">'# Nonzero elements\n'</span>);
     fprintf(fileID,<span class="string">'#%12s %12s %20.12s\n'</span>, <span class="string">'i'</span>, <span class="string">'j'</span>, <span class="string">'value'</span>);
-    fprintf(fileID,<span class="string">' %12i %12i %20.12e\n'</span>, row, col, mVal);
+    fprintf(fileID,<span class="string">' %12i %12i %20.12e\n'</span>, [row col mVal]');
     fclose(fileID);
     disp(sprintf(<span class="string">'Saved file %s'</span>,datFile));
 
@@ -299,7 +299,7 @@ PlotField(W(:,id),mesh.nodes,mesh.elements,plotOpts);
     <span class="comment">% Save nodes to text file</span>
     fileID = fopen(nodesFile,<span class="string">'w'</span>);
     fprintf(fileID,<span class="string">'#%16.12s %16.12s %16.12s\n'</span>, <span class="string">'x'</span>, <span class="string">'y'</span>, <span class="string">'z'</span>);
-    fprintf(fileID,<span class="string">' %16.12f %16.12f %16.12f\n'</span>, x, y, z);
+    fprintf(fileID,<span class="string">' %16.12f %16.12f %16.12f\n'</span>, [x y z]');
     fclose(fileID);
     disp(sprintf(<span class="string">'Saved file %s'</span>,nodesFile));
       
@@ -358,7 +358,7 @@ PlotField(W(:,id),mesh.nodes,mesh.elements,plotOpts);
     fprintf(fileID,<span class="string">' %12i %12i\n'</span>, n, n);
     fprintf(fileID,<span class="string">'# Nonzero elements\n'</span>);
     fprintf(fileID,<span class="string">'#%12s %12s %20.12s\n'</span>, <span class="string">'i'</span>, <span class="string">'j'</span>, <span class="string">'value'</span>);
-    fprintf(fileID,<span class="string">' %12i %12i %20.12e\n'</span>, row, col, wVal);
+    fprintf(fileID,<span class="string">' %12i %12i %20.12e\n'</span>, [row col wVal]');
     fclose(fileID);
     disp(sprintf(<span class="string">'Saved file %s'</span>,datFile));
 
@@ -436,7 +436,7 @@ PlotField(W(:,id),mesh.nodes,mesh.elements,plotOpts);
     <span class="comment">% Save nodes to text file</span>
     fileID = fopen(nodesFile,<span class="string">'w'</span>);
     fprintf(fileID,<span class="string">'#%16.12s %16.12s %16.12s\n'</span>, <span class="string">'x'</span>, <span class="string">'y'</span>, <span class="string">'z'</span>);
-    fprintf(fileID,<span class="string">' %16.12f %16.12f %16.12f\n'</span>, x, y, z);
+    fprintf(fileID,<span class="string">' %16.12f %16.12f %16.12f\n'</span>, [x y z]');
     fclose(fileID);
     disp(sprintf(<span class="string">'Saved file %s'</span>,nodesFile));
       
@@ -507,7 +507,7 @@ PlotField(W(:,id),mesh.nodes,mesh.elements,plotOpts);
 clear all, close all, clc;
 
 %% Set path for input data
-dataPath = '~/GitHub/utrecht-css-mathneuro-masterclass/Data/Spots-Disk/';
+dataPath = '~/GitHub/numerical-analysis-mathematical-neuroscience/Data/Spots-Disk/';
 
 %% Toggle for generating or loading data
 generateData = false;
@@ -548,12 +548,12 @@ end
 figure
 spy(M); title('Sparsity pattern of the matrix M')
 
-%% Plot sparsity pattern of the matrix
+%% Plot of the synaptic connections of node 2000;
 id = 2000;
 plotOpts.clim = 'auto';
 plotOpts.view = [0 90];
 figure;
-PlotField(W(:,id),mesh.nodes,mesh.elements,plotOpts);
+PlotField(full(W(:,id)),mesh.nodes,mesh.elements,plotOpts);
 
 %% Function GenerateFEMMatrix.m
 % <include>GenerateFEMMatrix.m</include>

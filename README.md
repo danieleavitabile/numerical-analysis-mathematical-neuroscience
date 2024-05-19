@@ -13,11 +13,11 @@ These tutorials are written for the masterclass [*Numerical and Analytical Metho
 The tutorials are self-contained, but they complemented the following lectures, which may also be of interest (some parts of the lectures were done on the board):
 * [Lecture 1](https://github.com/danieleavitabile/numerical-analysis-mathematical-neuroscience/blob/main/Lectures/lecture-1.png)
 * [Lecture 2](https://github.com/danieleavitabile/numerical-analysis-mathematical-neuroscience/blob/main/Lectures/lecture-2.pdf)
-* [Lecture 3](https://github.com/danieleavitabile/numerical-analysis-mathematical-neuroscience/blob/main/Lectures/lecture-2.pdf)
+* [Lecture 3](https://github.com/danieleavitabile/numerical-analysis-mathematical-neuroscience/blob/main/Lectures/lecture-3.pdf)
   
 ## Getting started
 1. Download the latest release of the tutorial, under **Releases**, on the right-hand-side of the present webpage, or [here](https://doi.org/10.5281/zenodo.11124322).
-1. Download the [accompanying dataset](https://zenodo.org/records/11120604).
+1. Download the [accompanying dataset](https://zenodo.org/records/11215758).
 1. Click on `Tutorial1` above, which is a link to `Tutorial/Questions/tutorial-1.pdf.
 1. Solutions to Tutorial 1 are available in an html file, linked in the tutorial pdf so you can browse at once code and generated graphs.
 1. You should be able to progress even if you get stuck on a question: try to get some tips from the html file.
@@ -27,6 +27,9 @@ The tutorials are self-contained, but they complemented the following lectures, 
 I would be pleased to receive pull requests if you correct errors in the tutorial questions or solutions: all sources, including the LaTeX files for the questions are in the `src/` directory, so you can modify them too (your work will be acknowledged explicitly).
 
 I am keen to include Julia and Python versions of the solutions, so do not hesitate to contact me if you want to help.
+
+## Acknowledgements 
+I am grateful to Nico C. X. Stuhlmüller for providing feedback to v1.0.0 of the tutorial, and for pointing out to some bugs.
 
 ## Citation
 Please cite this work using both references below

@@ -2,11 +2,10 @@
 clear all, close all, clc;
 
 %% Set path for input data
-dataPath = '~/GitHub/utrecht-css-mathneuro-masterclass/Data/Spots-Disk/';
+dataPath = '~/GitHub/numerical-analysis-mathematical-neuroscience/Data/Spots-Disk/';
 
 %% Toggle for generating or loading data
-generateData = true;
-
+generateData = false;
 
 %% Generate or load mesh 
 if generateData 

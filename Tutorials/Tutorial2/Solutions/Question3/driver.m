@@ -2,12 +2,12 @@
 clear all, close all, clc;
 
 %% Set path for input data
-dataPath = '~/GitHub/utrecht-css-mathneuro-masterclass/Data/Spots-Disk/';
+dataPath = '~/GitHub/numerical-analysis-mathematical-neuroscience/Data/Spots-Disk/';
 % dataPath = './';
 
 %% Generate mesh and matrix data, or else load it
 generateData = false;
-saveAnimation = true;
+saveAnimation = false;
 
 %% Geometry and mesh parameters
 R = 30; hmax = 0.03; % disk radius density mesh
@@ -48,7 +48,8 @@ end
 
 %% Initial condition
 x = mesh.nodes(:,1); y = mesh.nodes(:,2); n = length(x);
-u0 = 20./cosh(1/20*sqrt(x.^2 + y.^2)).^2;
+u0 = 20./cosh( 1/20*sqrt(x.^2 + y.^2) ).^2;
+
 
 %% Time step
 rhs = @(t,u) NeuralField(t,u,p,M);

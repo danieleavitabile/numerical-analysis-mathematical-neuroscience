@@ -7,11 +7,9 @@ function mesh = GenerateMesh(r,hmax,dataPath)
     saveFiles = true;
   end
 
-  %% Generate mesh of a hexagon inscribed in a unit disk using Matlab's PDE toolbox routines. 
-  theta = [0:5]'*pi/3; x = cos(theta); y = sin(theta);
-  hex = decsg([2;6;x;y]);
+  %% Generate mesh of a unit disk using Matlab's PDE toolbox routines. 
   model = createpde();
-  geometryFromEdges(model,hex);
+  geometryFromEdges(model,@circleg);
 
   % Specify a maximal element size
   mesh = generateMesh(model,"Hmax",hmax,GeometricOrder="linear");
@@ -45,7 +43,7 @@ function mesh = GenerateMesh(r,hmax,dataPath)
     % Save nodes to text file
     fileID = fopen(nodesFile,'w');
     fprintf(fileID,'#%16.12s %16.12s %16.12s\n', 'x', 'y', 'z');
-    fprintf(fileID,' %16.12f %16.12f %16.12f\n', x, y, z);
+    fprintf(fileID,' %16.12f %16.12f %16.12f\n', [x y z]');
     fclose(fileID);
     disp(sprintf('Saved file %s',nodesFile));
       
