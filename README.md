@@ -22,7 +22,7 @@ The tutorials are self-contained, but they complemented the following lectures, 
 1. Solutions to Tutorial 1 are available in an html file, linked in the tutorial pdf so you can browse at once code and generated graphs.
 1. You should be able to progress even if you get stuck on a question: try to get some tips from the html file.
 1. Some tasks are longer than others, and involve a substantial amount of coding, which is another reason for providing solutions. Even if you find it too cumbersome to write code for a question, you are expected to have a full grasp of the solutions before moving to the next one.
-1. The code that generated `Tutorials/Tutorial1/Solutions/html/driver.html` is in `Tutorials/Tutorial1/Solutions/`. I suggest to write your own code first, and then amend them after you have seen the solutions, if you find it useful. 
+1. The code that generated `Tutorials/Tutorial1/Solutions/html/driver.html` is in `Tutorials/Tutorial1/Solutions/`. I suggest to write your own code first, and then amend it after you have seen the solutions, if you find it useful. 
 
 I would be pleased to receive pull requests if you correct errors in the tutorial questions or solutions: all sources, including the LaTeX files for the questions are in the `src/` directory, so you can modify them too (your work will be acknowledged explicitly).
 
