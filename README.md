@@ -29,7 +29,9 @@ I would be pleased to receive pull requests if you correct errors in the tutoria
 I am keen to include Julia and Python versions of the solutions, so do not hesitate to contact me if you want to help.
 
 ## Acknowledgements 
-I am grateful to Nico C. X. Stuhlmüller for providing feedback to v1.0.0 of the tutorial, and for pointing out some bugs.
+I am grateful to [Nico C. X. Stuhlmüller](https://orcid.org/0000-0003-0509-9559
+
+) (see also his [GitHub account](https://github.com/ThePurox)) for providing feedback to v1.0.0 of the tutorial, and for pointing out some bugs.
 
 ## Citation
 Please cite this work using both references below
